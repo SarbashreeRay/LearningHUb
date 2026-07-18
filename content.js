@@ -58,8 +58,8 @@ const SITE_CONTENT = {
         <div class="card" onclick="navigateTo('mlops-lifecycle')">
           <span class="card-icon">🤖</span>
           <div class="card-title">MLOps & ML Engineering</div>
-          <div class="card-desc">Lifecycle, feature stores, training, serving, monitoring</div>
-          <div class="card-count">6 notes</div>
+          <div class="card-desc">Lifecycle, Level 1 Architecture, feature stores, training, serving, monitoring</div>
+          <div class="card-count">7 notes</div>
         </div>
         <div class="card" onclick="navigateTo('docker-for-de')">
           <span class="card-icon">🐳</span>
@@ -1929,6 +1929,75 @@ final <span class="kw">AS</span> (
   },
 
   // ─── 6. MLOps ──────────────────────────────────────
+
+  'mlops-level-1-architecture': {
+    id: 'mlops-level-1-architecture',
+    title: 'MLOps Level 1 Architecture',
+    category: 'MLOps & ML Engineering',
+    tags: ['mlops', 'architecture', 'pipeline', 'automation'],
+    lastUpdated: '2026-07-18',
+    body: `
+      <h2>MLOps Level 1 Architecture: Automated ML Pipeline</h2>
+      <p>This architecture represents Level 1 of MLOps maturity, where the goal is to perform continuous training of the model by automating the ML pipeline.</p>
+
+      <h3>High-Level Architecture</h3>
+      <div class="arch-diagram"><pre>
+                            ┌───────────────┐
+                            │ Model Analysis│
+                            └───────▲───────┘
+                                    │
+┌──────────────┐     ┌──────────────▼─────────────┐     ┌──────────────────┐     ┌───────────────────┐
+│ Data Analysis│────▶│ Orchestrated Experiment    │────▶│ Source Repository│────▶│ Pipeline Deployment│
+└──────────────┘     └────────────────────────────┘     └──────────────────┘     └────────┬──────────┘
+       ▲                                                                                  │
+       │ Offline extraction                                                               │
+┌──────┴───────┐                                                                          │
+│ Feature Store│◀┐                                                                        │
+└──────┬───────┘ │                                                                        │
+       │         │                                                                        │
+       │ Batch   │                                                                        │
+       │ fetching│                                                                        │
+┌──────▼─────────┴────────────────────────────────┐     ┌──────────────────┐              │
+│            Automated ML Pipeline                │────▶│  Model Registry  │◀─────────────┘
+└──────┬───────────────────────────────────▲──────┘     └────────┬─────────┘
+       │                                   │                     │
+       │                                   │                     ▼
+┌──────▼──────────────┐             ┌──────┴───────┐    ┌──────────────────┐
+│  ML Metadata Store  │             │   Trigger    │    │ CD: Model Serving│
+└─────────────────────┘             └──────▲───────┘    └────────┬─────────┘
+                                           │                     │
+                                    ┌──────┴───────┐    ┌────────▼─────────┐
+                                    │ Performance  │◀───│ Prediction Service│
+                                    │ Monitoring   │    └────────┬─────────┘
+                                    └──────────────┘             │
+                                                                 │
+                                    (Logging features &          │
+                                     predictions back to         │
+                                     Feature Store)              │
+                                    .............................┘
+      </pre></div>
+
+      <h3>Automated Pipeline Steps</h3>
+      <div class="pipeline-flow">
+        <div class="pipeline-step">1. Data Ingestion</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step">2. Data Preprocessing</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step">3. Model Training</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step">4. Model Evaluation</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step">5. Model Deployment</div>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-title">💡 Key Concept</div>
+        <div class="callout-body">
+          In Level 1, we automate the pipeline itself, not just the model training. A trigger (e.g., performance degradation detected by the monitoring service, or a scheduled cron job) kicks off the Automated ML Pipeline to retrain the model with fresh data from the Feature Store. The new model is automatically evaluated and pushed to the Model Registry.
+        </div>
+      </div>
+    `
+  },
 
   'mlops-lifecycle': {
     id: 'mlops-lifecycle',
@@ -3868,6 +3937,7 @@ const NAV_STRUCTURE = [
     title: 'MLOps & ML Engineering',
     icon: '🤖',
     children: [
+      { id: 'mlops-level-1-architecture', title: 'MLOps Level 1 Architecture', icon: '📄' },
       { id: 'mlops-lifecycle', title: 'MLOps Lifecycle & Maturity', icon: '📄' },
       { id: 'feature-stores', title: 'Feature Stores (Feast)', icon: '📄' },
       { id: 'model-training', title: 'Model Training (MLflow)', icon: '📄' },
