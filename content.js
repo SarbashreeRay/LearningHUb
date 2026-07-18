@@ -95,6 +95,12 @@ const SITE_CONTENT = {
           <span class="card-icon">🔌</span>
           <div class="card-title">AI Agents & Tool Engineering</div>
           <div class="card-desc">Model Context Protocol, Tooling, and Agentic Workflows</div>
+          <div class="card-count">2 notes</div>
+        </div>
+        <div class="card" onclick="navigateTo('build-ai-gateway')">
+          <span class="card-icon">🧠</span>
+          <div class="card-title">Build Your Own AI Gateway</div>
+          <div class="card-desc">Switch models intelligently, don't fragment your context.</div>
           <div class="card-count">1 notes</div>
         </div>
       </div>
@@ -121,6 +127,269 @@ const SITE_CONTENT = {
   },
 
   // ─── 00. AI AGENTS & TOOL ENGINEERING ──────────────
+  'build-ai-gateway': {
+    id: 'build-ai-gateway',
+    title: 'Build Your Own AI Gateway',
+    category: 'AI Agents & Tool Engineering',
+    tags: ['ai-gateway', 'architecture', 'routing', 'llm'],
+    lastUpdated: '2026-07-18',
+    body: `
+      <h2>Switch Models Intelligently</h2>
+      <p><em>Based on the guide by Srinivas Nelakuditi</em></p>
+      <p>Every vendor is selling an "AI gateway" that magically routes each task to the best model and saves you money. Most of that pitch is a magic trick. In this guide, we build a real one — with code — that switches models intelligently, not with brittle keyword heuristics.</p>
+      
+      <div class="callout warning">
+        <div class="callout-title">⚠️ The Golden Rule</div>
+        <div class="callout-body">The model is <strong>rented</strong> and swappable; your context is the <strong>asset</strong>. A good gateway protects the context and treats a model switch as a rare, gated event — not a per-task gamble. Never fragment your context across models mid-task.</div>
+      </div>
+
+      <h3>The 3 Core Truths</h3>
+      <div class="cards-grid">
+        <div class="card" style="cursor: default;">
+          <div class="card-title">1. Models are stateless</div>
+          <div class="card-desc">The gateway holds everything. "Memory" features are just external storage re-injected into the prompt. The model is a commodity; your history is the moat.</div>
+        </div>
+        <div class="card" style="cursor: default;">
+          <div class="card-title">2. Per-task routing costs 10x</div>
+          <div class="card-desc">Cache reads are 90% cheaper. When a router sends the same context to a different model, the new model has no cache, causing a 10x cost jump and latency spike.</div>
+        </div>
+        <div class="card" style="cursor: default;">
+          <div class="card-title">3. Switch at a gate, not per task</div>
+          <div class="card-desc">Pin one model per project. When the capability need genuinely jumps, open a gate: log it, compact the context, re-inject, re-pin, and take the cold-cache bullet once.</div>
+        </div>
+      </div>
+
+      <h3>The Architecture: Own the Context, Rent the Model</h3>
+      <p>Your gateway owns the context store and the intelligence (judge + gate). Models are interchangeable engines behind a single provider adapter.</p>
+      <div class="arch-diagram" style="background: transparent; border: none; padding: 0;">
+        <pre class="mermaid">
+flowchart TD
+    Store[(Context Store<br/>history, files, pinned model)]:::storeNode
+    
+    Judge[Capability Judge<br/>LLM, not keywords]:::logicNode
+    Gate[Escalation Gate<br/>deliberate & audited]:::logicNode
+    Adapter[Provider Adapter<br/>one interface]:::logicNode
+
+    Tier1[Tier 1<br/>cheap / fast]:::modelNode
+    Tier2[Tier 2<br/>strong]:::modelNode
+    Tier3[Tier 3<br/>frontier]:::modelNode
+
+    Store --> Judge
+    Store --> Gate
+    Store --> Adapter
+
+    Judge --> Tier1
+    Gate --> Tier2
+    Adapter --> Tier3
+
+    classDef storeNode fill:#0f766e,stroke:#0d9488,stroke-width:2px,color:#fff
+    classDef logicNode fill:#d97706,stroke:#b45309,stroke-width:2px,color:#fff
+    classDef modelNode fill:#334155,stroke:#475569,stroke-width:2px,color:#fff
+        </pre>
+      </div>
+
+      <hr style="margin: 40px 0; border-color: #334155;">
+
+      <h2>Build it: A Small, Intelligent Gateway</h2>
+      <p>Here is how you build the gateway in about 120 lines of Python. It pins a model per project, and escalates only at a gate — with the routing decision made by a model, not keyword rules.</p>
+
+      <h3>1. The Registry (Models grouped by capability tier)</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <span style="color: #94a3b8; font-size: 0.85em; float: right;">registry.py</span>
+        </div>
+        <div class="code-content">
+<pre><code>from dataclasses import dataclass, field
+
+@dataclass(frozen=True)
+class Model:
+    name: str       # serving-endpoint name
+    tier: int       # 1=cheap/fast, 2=strong, 3=frontier
+    ctx_tokens: int
+
+REGISTRY = [
+    Model("databricks-meta-llama-3-3-70b-instruct", 1, 128_000),
+    Model("databricks-claude-3-7-sonnet", 2, 200_000),
+    Model("databricks-claude-opus-4", 3, 1_000_000),
+]
+
+def best_for(tier: int) -> Model:
+    # cheapest model that meets the required capability tier
+    return min((m for m in REGISTRY if m.tier >= tier), key=lambda m: m.tier)
+</code></pre>
+        </div>
+      </div>
+
+      <h3>2. The Context (The asset you own)</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <span style="color: #94a3b8; font-size: 0.85em; float: right;">context.py</span>
+        </div>
+        <div class="code-content">
+<pre><code>class ProjectContext:
+    """The ASSET. Lives in YOUR store, never inside a model."""
+    
+    def __init__(self, project_id: str, intent: str):
+        self.project_id = project_id
+        self.intent = intent
+        self.history: list[dict] = [] # full transcript + tool results
+        self.summary: str = ""        # compacted memory for handoffs
+        self.pinned: Model | None = None # model affinity for this project
+        
+    def add(self, role, content):
+        self.history.append({"role": role, "content": content})
+        
+    def messages(self):
+        # full context is re-sent to whichever model runs
+        sys = f"Project intent: {self.intent}\\nSummary: {self.summary}"
+        return [{"role": "system", "content": sys}, *self.history]
+</code></pre>
+        </div>
+      </div>
+
+      <h3>3. The Provider (One interface, any model)</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <span style="color: #94a3b8; font-size: 0.85em; float: right;">provider.py</span>
+        </div>
+        <div class="code-content">
+<pre><code>import os
+from openai import OpenAI # Databricks FM APIs are OpenAI-compatible
+
+_client = OpenAI(
+    base_url=os.environ["DATABRICKS_HOST"] + "/serving-endpoints",
+    api_key=os.environ["DATABRICKS_TOKEN"],
+)
+
+def complete(model: str, messages: list[dict], temperature=0.2) -> str:
+    r = _client.chat.completions.create(
+        model=model, messages=messages, temperature=temperature
+    )
+    return r.choices[0].message.content
+
+# swap ANY provider by changing this one function — the context never moves.
+</code></pre>
+        </div>
+      </div>
+
+      <h3>4. The Judge (Intelligent routing)</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <span style="color: #94a3b8; font-size: 0.85em; float: right;">judge.py</span>
+        </div>
+        <div class="code-content">
+<pre><code>import json
+from provider import complete
+
+JUDGE = "databricks-meta-llama-3-3-70b-instruct" # cheap model routes
+
+JUDGE_PROMPT = """You are a capability router. Given the project intent
+and the next task, return the MINIMUM tier needed to do it well:
+ 1 = trivial I/O, lookups, formatting, short extraction
+ 2 = solid reasoning, multi-file code, refactors, analysis
+ 3 = frontier: novel design, architecture, hard proofs, long plans
+Return STRICT JSON: {"tier": int, "confidence": 0..1, "why": str}."""
+
+def judge_tier(intent: str, task: str) -> dict:
+    out = complete(JUDGE, [
+        {"role": "system", "content": JUDGE_PROMPT},
+        {"role": "user", "content": f"INTENT: {intent}\\nTASK: {task}"},
+    ], temperature=0)
+    return json.loads(out)
+</code></pre>
+        </div>
+      </div>
+
+      <h3>5. The Gate (Switch rarely, deliberately, and cheaply)</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <span style="color: #94a3b8; font-size: 0.85em; float: right;">gate.py</span>
+        </div>
+        <div class="code-content">
+<pre><code>from registry import best_for
+from judge import judge_tier
+from provider import complete
+
+def _compact(ctx) -> str:
+    convo = "\\n".join(f"{m['role']}: {m['content']}" for m in ctx.history)
+    return complete(ctx.pinned.name,
+        [{"role": "user", 
+          "content": "Summarize the essential state to continue:\\n" + convo}])
+
+def resolve_model(ctx, task):
+    v = judge_tier(ctx.intent, task)
+    need = best_for(v["tier"])
+    
+    if ctx.pinned and need.tier <= ctx.pinned.tier:
+        return ctx.pinned, v       # stay warm, ~0.1x cost
+        
+    if not ctx.pinned:
+        ctx.pinned = need          # first pin, at intent time
+        return ctx.pinned, v
+        
+    if v["confidence"] < 0.66:
+        return ctx.pinned, v       # don't switch on a guess
+        
+    # --- CAPABILITY GATE: a real, confident jump ---
+    audit(ctx, ctx.pinned, need, v) # log every escalation
+    ctx.summary = _compact(ctx)     # shrink the bullet
+    ctx.history = ctx.history[-4:]  # keep only recent verbatim
+    ctx.pinned = need               # re-pin; next calls warm again
+    return ctx.pinned, v
+</code></pre>
+        </div>
+      </div>
+
+      <h3>6. The Entry Point</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <span style="color: #94a3b8; font-size: 0.85em; float: right;">run.py</span>
+        </div>
+        <div class="code-content">
+<pre><code>def audit(ctx, frm, to, v):
+    print(f"[GATE] {ctx.project_id}: {frm.name} -> {to.name} "
+          f"(tier {v['tier']}, conf {v['confidence']:.2f}) {v['why']}")
+
+def ask(ctx, task):
+    model, verdict = resolve_model(ctx, task)
+    ctx.add("user", task)
+    answer = complete(model.name, ctx.messages()) # full ctx -> pinned model
+    ctx.add("assistant", answer)
+    return answer, model, verdict
+
+# usage
+ctx = ProjectContext("proj-42", intent="analyze a data folder")
+ask(ctx, "read and summarize the CSVs")         # tier 1 -> cheap, pinned
+ask(ctx, "now design a migration to a lakehouse") # tier 3 -> GATE fires
+</code></pre>
+        </div>
+      </div>
+
+      <hr style="margin: 40px 0; border-color: #334155;">
+
+      <h2>For Production: Use Databricks AI Gateway</h2>
+      <p>Building your own is how you learn the mechanics — and how you keep the two things worth owning: the context and the intelligent gate. But you should not hand-roll governance, rate limits, cost logging, PII guardrails, and fallbacks. That is exactly what <strong>Databricks AI Gateway</strong> provides: one governed endpoint in front of every model, enforced by the platform, not your code.</p>
+
+      <table>
+        <thead>
+          <tr><th>Your gateway keeps (in code)</th><th>Databricks AI Gateway runs (in platform)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>The context store (the asset)</td><td>Unified endpoint across all providers</td></tr>
+          <tr><td>The capability judge + gate</td><td>Rate limits & payload guardrails</td></tr>
+          <tr><td>Project model-affinity policy</td><td>Usage & cost logging / attribution</td></tr>
+          <tr><td>Compaction & audit trail</td><td>PII / safety guardrails, fallbacks</td></tr>
+        </tbody>
+      </table>
+    `
+  },
+
   'mcp-tool-engineering': {
     id: 'mcp-tool-engineering',
     title: 'Tool Engineering & Model Context Protocol (MCP)',
@@ -4122,6 +4391,7 @@ const NAV_STRUCTURE = [
     title: 'AI Agents & Tool Engineering',
     icon: '🔌',
     children: [
+      { id: 'build-ai-gateway', title: 'Build Your Own AI Gateway', icon: '📄' },
       { id: 'mcp-tool-engineering', title: 'Model Context Protocol (MCP)', icon: '📄' },
     ]
   },
