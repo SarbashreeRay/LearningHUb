@@ -135,7 +135,6 @@ const SITE_CONTENT = {
     lastUpdated: '2026-07-18',
     body: `
       <h2>Switch Models Intelligently</h2>
-      <p><em>Based on the guide by Srinivas Nelakuditi</em></p>
       <p>Every vendor is selling an "AI gateway" that magically routes each task to the best model and saves you money. Most of that pitch is a magic trick. In this guide, we build a real one — with code — that switches models intelligently, not with brittle keyword heuristics.</p>
       
       <div class="callout warning">
