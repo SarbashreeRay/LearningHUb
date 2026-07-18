@@ -91,6 +91,12 @@ const SITE_CONTENT = {
           <div class="card-desc">Customer requirements, architecture, integration, and operations</div>
           <div class="card-count">1 notes</div>
         </div>
+        <div class="card" onclick="navigateTo('mcp-tool-engineering')">
+          <span class="card-icon">🔌</span>
+          <div class="card-title">AI Agents & Tool Engineering</div>
+          <div class="card-desc">Model Context Protocol, Tooling, and Agentic Workflows</div>
+          <div class="card-count">1 notes</div>
+        </div>
       </div>
 
       <div class="section-title"><span class="section-icon">🔥</span> Featured Examples</div>
@@ -111,6 +117,235 @@ const SITE_CONTENT = {
           <div class="card-desc">FastAPI + Docker model serving with health checks & monitoring</div>
         </div>
       </div>
+    `
+  },
+
+  // ─── 00. AI AGENTS & TOOL ENGINEERING ──────────────
+  'mcp-tool-engineering': {
+    id: 'mcp-tool-engineering',
+    title: 'Tool Engineering & Model Context Protocol (MCP)',
+    category: 'AI Agents & Tool Engineering',
+    tags: ['ai-agents', 'mcp', 'tool-engineering', 'llm'],
+    lastUpdated: '2026-07-18',
+    body: `
+      <h2>Making Agents See and Do</h2>
+      <p>Large Language Models (LLMs) are brilliant at reasoning and text generation, but they are inherently limited because they cannot interact with the real world. They have no web access, no code execution, no API calls, and no file system access.</p>
+      
+      <div class="callout info">
+        <div class="callout-title">💡 The Solution</div>
+        <div class="callout-body">Give LLMs <strong>Tools</strong>. Tool Engineering is the discipline of designing interfaces between AI agents and external systems to ensure agents are reliable, autonomous, and effective.</div>
+      </div>
+
+      <h3>Components of an Agentic System</h3>
+      <div class="arch-diagram" style="background: transparent; border: none; padding: 0;">
+        <pre class="mermaid">
+flowchart TD
+    Agent((Agent)):::agentNode
+    Memory[Memory]:::compNode
+    Tools[Tools]:::compNode
+    Model[Model]:::compNode
+    Planning[Planning &<br>Reasoning]:::compNode
+
+    Memory <--> Agent
+    Tools <--> Agent
+    Model <--> Agent
+    Planning <--> Agent
+
+    classDef agentNode fill:#0ea5e9,stroke:#0284c7,stroke-width:3px,color:#fff,font-weight:bold
+    classDef compNode fill:#f59e0b,stroke:#d97706,stroke-width:2px,color:#fff,rx:10px
+        </pre>
+      </div>
+
+      <h3>What is a Tool?</h3>
+      <p>Tools are external functions, APIs, or systems that an AI agent can invoke to gather information, perform actions, or interact with the environment.</p>
+      <div class="cards-grid">
+        <div class="card" style="cursor: default;">
+          <div class="card-title">📚 Knowledge & Data</div>
+          <div class="card-desc">Databases, Vector Stores, Document Retrievers.</div>
+        </div>
+        <div class="card" style="cursor: default;">
+          <div class="card-title">🧮 Computation</div>
+          <div class="card-desc">Optimizers, Calculators, Code Interpreters.</div>
+        </div>
+        <div class="card" style="cursor: default;">
+          <div class="card-title">💬 Communication</div>
+          <div class="card-desc">Email services, Slack/WhatsApp connectors, CRMs.</div>
+        </div>
+        <div class="card" style="cursor: default;">
+          <div class="card-title">🔌 External APIs</div>
+          <div class="card-desc">Payment gateways, Weather APIs, Stock tickers.</div>
+        </div>
+      </div>
+
+      <h3>Tool Engineering Best Practices</h3>
+      <ul>
+        <li><strong>Building blocks, not prewired circuits:</strong> Allow LLMs to choose from an array of modular tools rather than forcing them into complex, hard-coded logic branches inside a single tool.</li>
+        <li><strong>Designed for AI consumption:</strong> Tool descriptions must have explicit information about inputs, outputs, and errors. Outputs should be clean JSON optimized for LLMs.</li>
+        <li><strong>Predictable & Specific:</strong> LLMs should easily determine what each tool does without guessing. Make the system deterministic, not probabilistic.</li>
+        <li><strong>Safe & Secure:</strong> All tool access should be authenticated, authorized, and audited. Destructive tools (e.g., deleting data) must support rollback and alert humans.</li>
+      </ul>
+
+      <hr style="margin: 40px 0; border-color: #334155;">
+
+      <h2>Model Context Protocol (MCP)</h2>
+      <p>MCP is an open-source standard from Anthropic for connecting AI applications to external systems. Think of it as the <strong>USB-C port for AI Applications</strong>.</p>
+      <p>MCP is to AI assistants what HTTP was to the web — a common protocol so models, apps, and tools can "talk" to each other in a safe, standardized way.</p>
+
+      <h3>MCP Architecture</h3>
+      <div class="arch-diagram" style="background: transparent; border: none; padding: 0;">
+        <pre class="mermaid">
+flowchart LR
+    subgraph Host["MCP HOST (Agent / Claude / IDE)"]
+        Client((MCP Client)):::clientNode
+    end
+    
+    subgraph Server["MCP SERVER (External Tool)"]
+        Tools((MCP Tools)):::serverNode
+    end
+
+    Client <-->|JSON-RPC / HTTP POST| Tools
+
+    classDef clientNode fill:#3b82f6,stroke:#2563eb,stroke-width:3px,color:#fff
+    classDef serverNode fill:#10b981,stroke:#059669,stroke-width:3px,color:#fff
+        </pre>
+      </div>
+
+      <div class="pipeline-flow" style="margin-top: 20px;">
+        <div class="pipeline-step" style="flex: 1;"><strong>Step 1: Discover</strong><br>Client requests <code>tools/list</code>.<br>Server responds with schema.</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step" style="flex: 1;"><strong>Step 2: Invoke</strong><br>Client calls <code>tools/call</code> with arguments.<br>Server executes and returns results.</div>
+      </div>
+
+      <hr style="margin: 40px 0; border-color: #334155;">
+
+      <h2>Real-Time Tutorial: Financial Data MCP Server</h2>
+      <p>Let's build a production-ready example of an MCP server that allows an AI Agent to query live stock/crypto prices and execute simulated trades safely.</p>
+
+      <h3>Step 1: Define the Tools</h3>
+      <p>We define modular, specific tools. We avoid one giant <code>manage_finances</code> tool, and instead provide <code>get_live_price</code> and <code>place_trade</code>.</p>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+        </div>
+        <div class="code-content">
+<pre><code>from mcp.server import Server, types
+
+# Initialize the MCP Server
+server = Server("financial-mcp-server")
+
+@server.list_tools()
+async def handle_list_tools() -> list[types.Tool]:
+    return [
+        types.Tool(
+            name="get_live_price",
+            description="Fetch the real-time price of a cryptocurrency or stock.",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "asset_id": {"type": "string", "description": "The ticker symbol (e.g., BTC, AAPL)"}
+                },
+                "required": ["asset_id"]
+            }
+        ),
+        types.Tool(
+            name="place_trade",
+            description="Place a buy or sell order for an asset. Requires user confirmation.",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "asset_id": {"type": "string"},
+                    "action": {"type": "string", "enum": ["buy", "sell"]},
+                    "quantity": {"type": "number"}
+                },
+                "required": ["asset_id", "action", "quantity"]
+            }
+        )
+    ]
+</code></pre>
+        </div>
+      </div>
+
+      <h3>Step 2: Implement Tool Execution (Sandboxed & Safe)</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+        </div>
+        <div class="code-content">
+<pre><code>import httpx
+
+@server.call_tool()
+async def handle_call_tool(name: str, arguments: dict) -> list[types.TextContent]:
+    if name == "get_live_price":
+        asset = arguments["asset_id"]
+        # Simulated API call to a financial provider
+        async with httpx.AsyncClient() as client:
+            # Example: Fetching from a mock API
+            # response = await client.get(f"https://api.finance.mock/{asset}")
+            price = 94500.50 if asset == "BTC" else 150.00
+            
+            return [
+                types.TextContent(
+                    type="text",
+                    text=f'{{"asset": "{asset}", "current_price_usd": {price}}}'
+                )
+            ]
+            
+    elif name == "place_trade":
+        # Follows best practice: Destructive/Monetary actions require audit & rollback logic
+        asset = arguments["asset_id"]
+        action = arguments["action"]
+        qty = arguments["quantity"]
+        
+        # Log to audit trail
+        print(f"AUDIT: Attempting to {action} {qty} of {asset}")
+        
+        return [
+            types.TextContent(
+                type="text",
+                text=f'{{"status": "SUCCESS", "message": "Executed {action} of {qty} {asset}"}}'
+            )
+        ]
+        
+    raise ValueError(f"Unknown tool: {name}")
+
+# Run the server over stdio
+async def main():
+    from mcp.server.stdio import stdio_server
+    async with stdio_server() as (read_stream, write_stream):
+        await server.run(read_stream, write_stream, server.create_initialization_options())
+</code></pre>
+        </div>
+      </div>
+
+      <h3>Step 3: Connect & Test via Claude Desktop</h3>
+      <p>To use this server, we configure our MCP Host (like the Claude Desktop app) to launch the server as a subprocess. The host communicates with our server using standard JSON-RPC over <code>stdio</code>.</p>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">json</span>
+        </div>
+        <div class="code-content">
+<pre><code>// claude_desktop_config.json
+{
+  "mcpServers": {
+    "finance": {
+      "command": "python",
+      "args": ["/path/to/financial_server.py"]
+    }
+  }
+}</code></pre>
+        </div>
+      </div>
+      
+      <p><strong>The Flow:</strong> When the user asks "What is the price of BTC and should I buy 2?", the Agent:</p>
+      <ol>
+        <li>Analyzes the request and determines it needs the <code>get_live_price</code> tool.</li>
+        <li>Sends an MCP JSON-RPC call: <code>{"method": "tools/call", "params": {"name": "get_live_price", "arguments": {"asset_id": "BTC"}}}</code>.</li>
+        <li>Receives the price ($94,500.50).</li>
+        <li>Evaluates the logic, and decides to buy.</li>
+        <li>Sends a second MCP call: <code>{"method": "tools/call", "params": {"name": "place_trade", "arguments": {"asset_id": "BTC", "action": "buy", "quantity": 2}}}</code>.</li>
+        <li>Responds to the user: <em>"The current price of BTC is $94,500.50. I have successfully placed a buy order for 2 BTC."</em></li>
+      </ol>
     `
   },
 
@@ -3883,6 +4118,13 @@ query.awaitTermination()</pre></div>
 
 // Navigation structure for sidebar
 const NAV_STRUCTURE = [
+  {
+    title: 'AI Agents & Tool Engineering',
+    icon: '🔌',
+    children: [
+      { id: 'mcp-tool-engineering', title: 'Model Context Protocol (MCP)', icon: '📄' },
+    ]
+  },
   {
     title: 'Forward Deployment Engineering',
     icon: '🌉',
