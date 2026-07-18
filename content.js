@@ -85,6 +85,12 @@ const SITE_CONTENT = {
           <div class="card-desc">GitHub Actions, Terraform, DataOps, Prometheus & Grafana</div>
           <div class="card-count">4 notes</div>
         </div>
+        <div class="card" onclick="navigateTo('fde-lifecycle')">
+          <span class="card-icon">🌉</span>
+          <div class="card-title">Forward Deployment Engineering</div>
+          <div class="card-desc">Customer requirements, architecture, integration, and operations</div>
+          <div class="card-count">1 notes</div>
+        </div>
       </div>
 
       <div class="section-title"><span class="section-icon">🔥</span> Featured Examples</div>
@@ -105,6 +111,67 @@ const SITE_CONTENT = {
           <div class="card-desc">FastAPI + Docker model serving with health checks & monitoring</div>
         </div>
       </div>
+    `
+  },
+
+  // ─── 0. FORWARD DEPLOYMENT ENGINEERING ──────────────
+  'fde-lifecycle': {
+    id: 'fde-lifecycle',
+    title: 'Forward Deployment Engineer Lifecycle',
+    category: 'Forward Deployment Engineering',
+    tags: ['fde', 'architecture', 'lifecycle', 'deployment'],
+    lastUpdated: '2026-07-18',
+    body: `
+      <h2>Forward Deployment Engineer (FDE) Lifecycle</h2>
+      <p>A Forward Deployment Engineer bridges the gap between software engineering, solutions architecture, customer success, and product development.</p>
+
+      <h3>End-to-End Lifecycle</h3>
+      <div class="arch-diagram"><pre>
+Customer Requirements → Business Analysis → Solution Architecture → System Design → Infrastructure Design
+→ API & Integration Design → Data Pipeline Design → Security & Compliance → Development → Testing
+→ Deployment → Production Support → Customer Feedback → Product Improvements
+      </pre></div>
+
+      <h3>Example: AI Customer Support Platform</h3>
+      <p>Imagine a telecom company wants an AI-powered customer support system.</p>
+      <ul>
+        <li><strong>Discover:</strong> CRM, ticketing, auth, compliance needs.</li>
+        <li><strong>Design:</strong> Microservices, API gateway, LLM service, Vector DB (RAG), Kafka.</li>
+        <li><strong>Implement:</strong> APIs, CRM integration, AI workflows, Terraform & K8s.</li>
+        <li><strong>Test:</strong> Functionality, integration, load, security.</li>
+        <li><strong>Deploy:</strong> CI/CD rollout to K8s (canary).</li>
+        <li><strong>Operate:</strong> Monitor latency, accuracy, health, troubleshoot.</li>
+      </ul>
+
+      <h3>CI/CD Pipeline</h3>
+      <div class="pipeline-flow">
+        <div class="pipeline-step">Git Push</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step">GitHub Actions (Tests, Build, Push)</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step">Terraform (Infra)</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step">Deploy Kubernetes</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step">Smoke Test</div>
+      </div>
+
+      <h3>Typical Technology Stack</h3>
+      <table>
+        <thead>
+          <tr><th>Layer</th><th>Technologies</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Frontend</td><td>React, Angular, Next.js</td></tr>
+          <tr><td>Backend</td><td>Java Spring Boot, FastAPI, Go, Node.js</td></tr>
+          <tr><td>AI/LLM</td><td>LangChain, Llama, OpenAI API, Hugging Face, RAG</td></tr>
+          <tr><td>Databases</td><td>PostgreSQL, Oracle, MySQL, MongoDB</td></tr>
+          <tr><td>Streaming</td><td>Kafka, RabbitMQ</td></tr>
+          <tr><td>Cloud & IaC</td><td>AWS, Azure, GCP / Terraform, Helm</td></tr>
+          <tr><td>Containers & CI/CD</td><td>Docker, Kubernetes / GitHub Actions, ArgoCD</td></tr>
+          <tr><td>Observability & Security</td><td>Prometheus, Grafana, ELK / OAuth2, JWT, Vault</td></tr>
+        </tbody>
+      </table>
     `
   },
 
