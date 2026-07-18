@@ -107,6 +107,12 @@ const SITE_CONTENT = {
 
       <div class="section-title"><span class="section-icon">🔥</span> Featured Examples</div>
       <div class="cards-grid">
+        <div class="card" onclick="navigateTo('large-model-deployment')">
+          <span class="card-icon">🚀</span>
+          <div class="card-title">Large Model Deployment</div>
+          <div class="card-desc">Feature Ready Architecture from Design to Operations.</div>
+          <div class="card-count">1 notes</div>
+        </div>
         <div class="card" onclick="navigateTo('etl-vs-elt')">
           <span class="card-icon">📋</span>
           <div class="card-title">Production Airflow DAG</div>
@@ -618,6 +624,41 @@ async def main():
   },
 
   // ─── 0. FORWARD DEPLOYMENT ENGINEERING ──────────────
+  'large-model-deployment': {
+    id: 'large-model-deployment',
+    title: 'Large Model Deployment Architecture',
+    category: 'Forward Deployment Engineering',
+    tags: ['deployment', 'architecture', 'llm', 'infrastructure'],
+    lastUpdated: '2026-07-18',
+    body: `
+      <h2>Large Model Deployment – Feature Ready Architecture</h2>
+      <p>A comprehensive architecture for deploying large foundational and fine-tuned models from design to operations.</p>
+      
+      <div class="image-container" style="margin: 30px 0; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        <img src="assets/images/large-model-deployment.jpg" alt="Large Model Deployment Architecture" style="width: 100%; height: auto; display: block;" />
+      </div>
+
+      <div class="cards-grid">
+        <div class="card" style="cursor: default;">
+          <div class="card-title">1. Access & Service Layer</div>
+          <div class="card-desc">API Gateway, Auth & IAM, Rate Limiting, and the Model Inference Service (including RAG).</div>
+        </div>
+        <div class="card" style="cursor: default;">
+          <div class="card-title">2. Model Layer</div>
+          <div class="card-desc">Proprietary and Fine-Tuned Models with orchestration (Routing, Caching, Autoscaling) and management (Registry, A/B Testing).</div>
+        </div>
+        <div class="card" style="cursor: default;">
+          <div class="card-title">3. Data & Integration Layer</div>
+          <div class="card-desc">Vector DBs, Metadata Store, Redis Cache, Kafka Message Queues, and Enterprise Systems (ERP, CRM).</div>
+        </div>
+        <div class="card" style="cursor: default;">
+          <div class="card-title">4. Compute Infrastructure</div>
+          <div class="card-desc">High-performance NVIDIA GB300 GPUs, NVLink interconnects, and liquid-cooled data centers providing 120 MW of capacity.</div>
+        </div>
+      </div>
+    `
+  },
+
   'fde-lifecycle': {
     id: 'fde-lifecycle',
     title: 'Forward Deployment Engineer Lifecycle',
@@ -4398,6 +4439,7 @@ const NAV_STRUCTURE = [
     title: 'Forward Deployment Engineering',
     icon: '🌉',
     children: [
+      { id: 'large-model-deployment', title: 'Large Model Deployment', icon: '📄' },
       { id: 'fde-lifecycle', title: 'Forward Deployment Engineer Lifecycle', icon: '📄' },
     ]
   },
