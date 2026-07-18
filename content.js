@@ -130,44 +130,59 @@ const SITE_CONTENT = {
         <img src="assets/images/fde-lifecycle.jpg" alt="Forward Deployment Engineer Lifecycle" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" />
       </div>
 
-      <h3>Example: AI Customer Support Platform</h3>
-      <p>Imagine a telecom company wants an AI-powered customer support system.</p>
-      <ul>
-        <li><strong>Discover:</strong> CRM, ticketing, auth, compliance needs.</li>
-        <li><strong>Design:</strong> Microservices, API gateway, LLM service, Vector DB (RAG), Kafka.</li>
-        <li><strong>Implement:</strong> APIs, CRM integration, AI workflows, Terraform & K8s.</li>
-        <li><strong>Test:</strong> Functionality, integration, load, security.</li>
-        <li><strong>Deploy:</strong> CI/CD rollout to K8s (canary).</li>
-        <li><strong>Operate:</strong> Monitor latency, accuracy, health, troubleshoot.</li>
-      </ul>
-
-      <h3>CI/CD Pipeline</h3>
-      <div class="pipeline-flow">
-        <div class="pipeline-step">Git Push</div>
-        <span class="pipeline-arrow">→</span>
-        <div class="pipeline-step">GitHub Actions (Tests, Build, Push)</div>
-        <span class="pipeline-arrow">→</span>
-        <div class="pipeline-step">Terraform (Infra)</div>
-        <span class="pipeline-arrow">→</span>
-        <div class="pipeline-step">Deploy Kubernetes</div>
-        <span class="pipeline-arrow">→</span>
-        <div class="pipeline-step">Smoke Test</div>
+      <h3>The 6 Core Responsibilities of an FDE</h3>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-title">01. Understand the Business Problem</div>
+          <div class="card-desc">Sit with the customer to find high-impact AI use cases and meticulously map out the workflow.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">02. Deploy AI Models & Agents</div>
+          <div class="card-desc">Deploy LLMs, RAG systems, agents, and automation workflows that are custom-fit to the customer's needs.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">03. Build the Integrations</div>
+          <div class="card-desc">Seamlessly connect CRMs, ERPs, internal databases, cloud platforms, APIs, and enterprise apps.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">04. Run the AI Infrastructure</div>
+          <div class="card-desc">Manage cloud deployments, vector DBs, Kubernetes clusters, MLOps pipelines, and security guardrails.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">05. Talk to Humans, Not Just Code</div>
+          <div class="card-desc">Translate complex AI concepts for business leaders, product teams, and non-technical stakeholders.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">06. Drive Adoption & Measure ROI</div>
+          <div class="card-desc">Train teams, optimize workflows, scale successful pilots, and mathematically prove the business outcome.</div>
+        </div>
       </div>
 
-      <h3>Typical Technology Stack</h3>
+      <h3>Typical Delivery Timeline</h3>
+      <div class="pipeline-flow">
+        <div class="pipeline-step"><strong>Wk 04: Prototype</strong><br>First working AI tool + 1-page write-up</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step"><strong>Wk 10: Production RAG</strong><br>RAG system + arch doc + eval</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step"><strong>Wk 15: Regulated Rebuild</strong><br>Architecture + prototype + risk registry</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step"><strong>Wk 17: Security Audit</strong><br>End-to-end security & compliance audit</div>
+      </div>
+
+      <h3>Core FDE Skillset (Build & Deliver)</h3>
       <table>
         <thead>
-          <tr><th>Layer</th><th>Technologies</th></tr>
+          <tr><th>Category</th><th>Topic</th><th>Description</th></tr>
         </thead>
         <tbody>
-          <tr><td>Frontend</td><td>React, Angular, Next.js</td></tr>
-          <tr><td>Backend</td><td>Java Spring Boot, FastAPI, Go, Node.js</td></tr>
-          <tr><td>AI/LLM</td><td>LangChain, Llama, OpenAI API, Hugging Face, RAG</td></tr>
-          <tr><td>Databases</td><td>PostgreSQL, Oracle, MySQL, MongoDB</td></tr>
-          <tr><td>Streaming</td><td>Kafka, RabbitMQ</td></tr>
-          <tr><td>Cloud & IaC</td><td>AWS, Azure, GCP / Terraform, Helm</td></tr>
-          <tr><td>Containers & CI/CD</td><td>Docker, Kubernetes / GitHub Actions, ArgoCD</td></tr>
-          <tr><td>Observability & Security</td><td>Prometheus, Grafana, ELK / OAuth2, JWT, Vault</td></tr>
+          <tr><td><strong>BUILD</strong></td><td>Fine-Tuning & Customisation</td><td>When to fine-tune vs prompt vs RAG. SFT, LoRA / QLoRA, distillation, dataset prep, eval gates, cost-benefit math.</td></tr>
+          <tr><td><strong>BUILD</strong></td><td>Deploying AI in Production</td><td>AWS Bedrock, Azure OpenAI, GCP Vertex. Serving frameworks, latency optimisation, caching, autoscaling.</td></tr>
+          <tr><td><strong>BUILD</strong></td><td>Cost, Latency & Scale</td><td>Token economics, caching layers, model routing, batching. Turning an unprofitable demo into a profitable product.</td></tr>
+          <tr><td><strong>BUILD</strong></td><td>Enterprise Integration</td><td>Customer data schemas, lineage, secrets, audit trails. SOC2, HIPAA, DPDP. On-prem and VPC deployments.</td></tr>
+          <tr><td><strong>DELIVER</strong></td><td>Security & Responsible AI</td><td>OWASP for LLMs, prompt-injection defence, hallucination handling, PII, bias audits, DPDP & EU AI Act.</td></tr>
+          <tr><td><strong>DELIVER</strong></td><td>Stakeholder Alignment</td><td>Delivery planning, iteration cycles, managing scope changes, running war rooms during incidents.</td></tr>
+          <tr><td><strong>BUILD</strong></td><td>Vertical Playbooks</td><td>Deep dives into named domains (Fraud detection, ticket routing, multilingual workflows, clinical-grade healthcare RAG).</td></tr>
+          <tr><td><strong>DELIVER</strong></td><td>AI Product Sense</td><td>Spotting patterns across deployments. When to build vs configure. Writing PRDs, solution-design docs, and scoping pilots vs production.</td></tr>
         </tbody>
       </table>
     `
