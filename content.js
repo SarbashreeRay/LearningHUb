@@ -126,11 +126,39 @@ const SITE_CONTENT = {
       <p>A Forward Deployment Engineer bridges the gap between software engineering, solutions architecture, customer success, and product development.</p>
 
       <h3>End-to-End Lifecycle</h3>
-      <div class="arch-diagram"><pre>
-Customer Requirements → Business Analysis → Solution Architecture → System Design → Infrastructure Design
-→ API & Integration Design → Data Pipeline Design → Security & Compliance → Development → Testing
-→ Deployment → Production Support → Customer Feedback → Product Improvements
-      </pre></div>
+      <div class="arch-diagram" style="background: transparent; border: none; overflow: visible; padding: 0;">
+        <pre class="mermaid">
+flowchart TD
+    classDef phase fill:#2d3748,stroke:#4a5568,stroke-width:2px,color:#fff,rx:5px,font-family:Arial
+    classDef tech fill:#1a202c,stroke:#2d3748,stroke-width:1px,color:#cbd5e0,rx:5px
+    classDef goal fill:#2b6cb0,stroke:#3182ce,stroke-width:2px,color:#fff,font-weight:bold,rx:5px
+
+    P1["01. Requirement Gathering<br><i>Customer Goals, Compliance</i>"]:::phase
+    P2["02. Solution Design<br><i>Arch, System & Security</i>"]:::phase
+    P3["03. Implementation (Dev)<br><i>Build, Pipelines, IaC</i>"]:::phase
+    P4["04. Testing & Validation<br><i>Integration, Perf, UAT</i>"]:::phase
+    P5["05. Deployment<br><i>CI/CD, K8s, Canary/B-G</i>"]:::phase
+    P6["06. Operations & Monitoring<br><i>Alerting, Observability</i>"]:::phase
+    P7["07. Incident Response<br><i>RCA, Resolution, Runbooks</i>"]:::phase
+    P8["08. Customer Success<br><i>Training, Adoption</i>"]:::phase
+    P9["09. Continuous Improvement<br><i>Feedback, Metrics</i>"]:::phase
+
+    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9
+    P9 -.->|"Iterate & Improve"| P1
+
+    subgraph Tech["Enabling Technologies"]
+        direction LR
+        T1["Cloud (AWS/GCP/Azure)"]:::tech
+        T2["K8s & Docker"]:::tech
+        T3["Terraform & CI/CD"]:::tech
+        T5["Monitoring & Logging"]:::tech
+        T6["Security (Vault/IAM)"]:::tech
+        T7["DB & Messaging (Kafka)"]:::tech
+    end
+    
+    G["GOAL: Deliver Value Fast, Build Trust, Drive Adoption, and Continuously Improve"]:::goal
+        </pre>
+      </div>
 
       <h3>Example: AI Customer Support Platform</h3>
       <p>Imagine a telecom company wants an AI-powered customer support system.</p>

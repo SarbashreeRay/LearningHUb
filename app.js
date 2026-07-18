@@ -127,6 +127,7 @@ function renderPage(page) {
 
   if (page.id === 'home') {
     content.innerHTML = `<div class="page-content-animated">${page.body}</div>`;
+    if (window.mermaid) { setTimeout(() => mermaid.run({ querySelector: '.mermaid' }).catch(console.error), 0); }
     return;
   }
 
@@ -153,6 +154,10 @@ function renderPage(page) {
         ${page.body}
       </div>
     </div>`;
+
+  if (window.mermaid) {
+    setTimeout(() => mermaid.run({ querySelector: '.mermaid' }).catch(console.error), 0);
+  }
 }
 
 function formatDate(dateStr) {
