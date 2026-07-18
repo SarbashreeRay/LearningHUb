@@ -3802,6 +3802,13 @@ query.awaitTermination()</pre></div>
 // Navigation structure for sidebar
 const NAV_STRUCTURE = [
   {
+    title: 'Forward Deployment Engineering',
+    icon: '🌉',
+    children: [
+      { id: 'fde-lifecycle', title: 'Forward Deployment Engineer Lifecycle', icon: '📄' },
+    ]
+  },
+  {
     title: 'Data Engineering Fundamentals',
     icon: '🏗️',
     children: [
