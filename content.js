@@ -95,12 +95,18 @@ const SITE_CONTENT = {
           <span class="card-icon">🔌</span>
           <div class="card-title">AI Agents & Tool Engineering</div>
           <div class="card-desc">Model Context Protocol, Tooling, and Agentic Workflows</div>
-          <div class="card-count">2 notes</div>
+          <div class="card-count">3 notes</div>
         </div>
         <div class="card" onclick="navigateTo('build-ai-gateway')">
           <span class="card-icon">🧠</span>
           <div class="card-title">Build Your Own AI Gateway</div>
           <div class="card-desc">Switch models intelligently, don't fragment your context.</div>
+          <div class="card-count">1 notes</div>
+        </div>
+        <div class="card" onclick="navigateTo('ai-architecture-stack')">
+          <span class="card-icon">🏗️</span>
+          <div class="card-title">$0 AI Architecture Stack</div>
+          <div class="card-desc">Enterprise-grade, open-source, privacy-first AI stack — 2026 Edition</div>
           <div class="card-count">1 notes</div>
         </div>
       </div>
@@ -620,6 +626,390 @@ async def main():
         <li>Sends a second MCP call: <code>{"method": "tools/call", "params": {"name": "place_trade", "arguments": {"asset_id": "BTC", "action": "buy", "quantity": 2}}}</code>.</li>
         <li>Responds to the user: <em>"The current price of BTC is $94,500.50. I have successfully placed a buy order for 2 BTC."</em></li>
       </ol>
+    `
+  },
+
+  'ai-architecture-stack': {
+    id: 'ai-architecture-stack',
+    title: '$0 AI Architecture Stack — 2026 Edition',
+    category: 'AI Agents & Tool Engineering',
+    tags: ['ai-stack', 'architecture', 'open-source', 'llm', 'rag', 'ollama', 'self-hosted'],
+    lastUpdated: '2026-07-21',
+    body: `
+      <h2>Enterprise-Grade · Open Source · Privacy-First · Cost-Efficient</h2>
+      <p>A complete, production-ready AI architecture stack built entirely on <strong>free and open-source tools</strong>. Run locally, maintain full data privacy, and scale from laptop to data center — all at $0 cost to start.</p>
+
+      <div class="callout info">
+        <div class="callout-title">💡 Why $0?</div>
+        <div class="callout-body">Every component in this stack is either open-source, has a generous free tier, or runs locally on your hardware. No API keys required to get started. No vendor lock-in. Full ownership of your data and models.</div>
+      </div>
+
+      <div class="image-container" style="margin: 30px 0; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        <img src="assets/images/ai-architecture-stack.png" alt="$0 AI Architecture Stack — 2026 Edition" style="width: 100%; height: auto; display: block;" />
+      </div>
+
+      <h3>Key Principles</h3>
+      <div class="cards-grid">
+        <div class="card" style="cursor: default;">
+          <div class="card-title">💰 $0 to Get Started</div>
+          <div class="card-desc">No API costs, no subscriptions. Everything runs locally or has free tiers. Start building today without a credit card.</div>
+        </div>
+        <div class="card" style="cursor: default;">
+          <div class="card-title">🔓 Open Source First</div>
+          <div class="card-desc">Every layer uses open-source tools. No proprietary lock-in. Fork, customize, and extend anything in the stack.</div>
+        </div>
+        <div class="card" style="cursor: default;">
+          <div class="card-title">🏠 Run Locally / Private</div>
+          <div class="card-desc">Your data never leaves your infrastructure. Models run on your hardware. Full privacy and compliance by default.</div>
+        </div>
+        <div class="card" style="cursor: default;">
+          <div class="card-title">📦 Modular & Scalable</div>
+          <div class="card-desc">Swap any component. Scale from a single laptop to a GPU cluster. Each layer is independent and replaceable.</div>
+        </div>
+        <div class="card" style="cursor: default;">
+          <div class="card-title">👁️ Full Observability</div>
+          <div class="card-desc">Traces, metrics, logs, evaluations, and alerts across every layer. Know exactly what your AI is doing at all times.</div>
+        </div>
+      </div>
+
+      <hr style="margin: 40px 0; border-color: #334155;">
+
+      <h2>The Stack — Layer by Layer</h2>
+
+      <h3>1. Frontend Layer</h3>
+      <p>The user-facing interface. These tools let you build beautiful AI-powered web apps without complex frontend frameworks.</p>
+      <table>
+        <thead>
+          <tr><th>Tool</th><th>What it Does</th><th>Why It's Here</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Next.js</strong></td><td>Full-stack React framework</td><td>Production-grade web apps with SSR, API routes, and edge functions</td></tr>
+          <tr><td><strong>Streamlit</strong></td><td>Python-native UI framework</td><td>Prototype AI apps in minutes. Zero frontend code needed.</td></tr>
+          <tr><td><strong>Vercel (Free Tier)</strong></td><td>Deployment platform</td><td>One-click deploy with CDN, serverless functions, and analytics</td></tr>
+        </tbody>
+      </table>
+
+      <h3>2. Agent Orchestrator Layer — The Brain</h3>
+      <p>The orchestrator plans, reasons, and delegates tasks to the right tools and models. It's the central nervous system of your AI application.</p>
+      <table>
+        <thead>
+          <tr><th>Tool</th><th>Approach</th><th>Best For</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>LangGraph</strong></td><td>Graph-based agent workflows</td><td>Complex, stateful multi-step agents with cycles and branching</td></tr>
+          <tr><td><strong>CrewAI</strong></td><td>Role-based multi-agent</td><td>Teams of specialized agents collaborating on tasks</td></tr>
+        </tbody>
+      </table>
+      <div class="callout warning">
+        <div class="callout-title">⚠️ Orchestrator ≠ Framework Lock-in</div>
+        <div class="callout-body">The orchestrator is the <strong>most opinionated</strong> layer. Choose one based on your use case: <em>LangGraph</em> for graph-based control flow, <em>CrewAI</em> for multi-agent collaboration. Both work with every other layer in this stack.</div>
+      </div>
+
+      <h3>3. Local LLM Layer (via Ollama)</h3>
+      <p>Run large language models locally. No API costs. No data leaving your machine. Full privacy.</p>
+      <table>
+        <thead>
+          <tr><th>Model</th><th>Parameters</th><th>Best For</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Gemma 4 E4B</strong></td><td>Efficient 4B</td><td>Fast local inference, edge deployment, resource-constrained environments</td></tr>
+          <tr><td><strong>Llama 3.3 70B</strong></td><td>70B</td><td>Strong reasoning, code generation, complex analysis</td></tr>
+          <tr><td><strong>Mistral Small 4</strong></td><td>Small</td><td>Lightweight tasks, high-throughput scenarios, multilingual</td></tr>
+        </tbody>
+      </table>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <span style="color: #94a3b8; font-size: 0.85em; float: right;">Getting started with Ollama</span>
+        </div>
+        <div class="code-content">
+<pre><code># Install Ollama
+curl -fsSL https://ollama.com/install.sh | sh
+
+# Pull and run models locally
+ollama pull gemma4:e4b
+ollama pull llama3.3:70b
+ollama pull mistral-small:latest
+
+# Run a model — it's now an OpenAI-compatible API on localhost:11434
+ollama run gemma4:e4b "Explain RAG in 3 sentences"
+
+# Use from Python with the OpenAI SDK
+# client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")</code></pre>
+        </div>
+      </div>
+
+      <hr style="margin: 40px 0; border-color: #334155;">
+
+      <h3>4. RAG Pipeline — Retrieve → Augment → Generate</h3>
+      <p>When the LLM needs external knowledge, the RAG pipeline retrieves relevant documents, augments the prompt, and generates grounded answers.</p>
+      <div class="pipeline-flow">
+        <div class="pipeline-step"><strong>Retrieval</strong><br>Find relevant chunks from your knowledge base</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step"><strong>Processing</strong><br>Chunking, Embedding, Reranking for precision</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step"><strong>Generation</strong><br>Augmented Prompt + LLM produces grounded answer</div>
+      </div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <span style="color: #94a3b8; font-size: 0.85em; float: right;">LlamaIndex RAG Pipeline</span>
+        </div>
+        <div class="code-content">
+<pre><code>from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
+from llama_index.llms.ollama import Ollama
+from llama_index.embeddings.huggingface import HuggingFaceEmbedding
+
+# Use local Ollama model — $0 cost
+llm = Ollama(model="llama3.3:70b", request_timeout=120)
+embed = HuggingFaceEmbedding(model_name="BAAI/bge-small-en-v1.5")
+
+# Load documents and build index
+documents = SimpleDirectoryReader("./data").load_data()
+index = VectorStoreIndex.from_documents(
+    documents, llm=llm, embed_model=embed
+)
+
+# Query with RAG — retrieves relevant chunks automatically
+query_engine = index.as_query_engine(similarity_top_k=5)
+response = query_engine.query("What is the deployment architecture?")
+print(response)</code></pre>
+        </div>
+      </div>
+
+      <h3>5. Vector Database — Store & Search Embeddings</h3>
+      <p>Vector databases store document embeddings and enable fast semantic similarity search for your RAG pipeline.</p>
+      <table>
+        <thead>
+          <tr><th>Database</th><th>Deployment</th><th>Best For</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Qdrant</strong></td><td>Self-hosted / Cloud</td><td>Production-grade, Rust-powered, rich filtering, best performance</td></tr>
+          <tr><td><strong>ChromaDB</strong></td><td>Embedded / Self-hosted</td><td>Quick prototyping, Python-native, simple API, great for dev</td></tr>
+          <tr><td><strong>Milvus</strong></td><td>Self-hosted / Cloud</td><td>Massive scale (billions of vectors), distributed, GPU-accelerated</td></tr>
+        </tbody>
+      </table>
+
+      <hr style="margin: 40px 0; border-color: #334155;">
+
+      <h3>6. MCP Tool Layer (Model Context Protocol)</h3>
+      <p>MCP servers extend your agents with external capabilities — GitHub, Slack, databases, APIs, and filesystems — all through a standardized protocol.</p>
+      <div class="cards-grid">
+        <div class="card" style="cursor: default;">
+          <div class="card-title">🐙 GitHub</div>
+          <div class="card-desc">Search repos, create issues, manage PRs, read code — all from your agent.</div>
+        </div>
+        <div class="card" style="cursor: default;">
+          <div class="card-title">💬 Slack</div>
+          <div class="card-desc">Send messages, search channels, manage threads and notifications.</div>
+        </div>
+        <div class="card" style="cursor: default;">
+          <div class="card-title">🗄️ Oracle DB</div>
+          <div class="card-desc">Query enterprise databases, run reports, manage schemas.</div>
+        </div>
+        <div class="card" style="cursor: default;">
+          <div class="card-title">🔗 REST APIs</div>
+          <div class="card-desc">Connect to any HTTP API — weather, payments, CRMs, custom services.</div>
+        </div>
+        <div class="card" style="cursor: default;">
+          <div class="card-title">📁 Filesystem</div>
+          <div class="card-desc">Read, write, and manage local files and directories securely.</div>
+        </div>
+      </div>
+
+      <h3>7. Code Agent Layer — AI Pair Programmer</h3>
+      <p>Terminal-based AI coding assistants that work directly in your development environment.</p>
+      <table>
+        <thead>
+          <tr><th>Tool</th><th>What it Does</th><th>Key Feature</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Claude Code CLI</strong></td><td>Agentic coding in terminal</td><td>Full codebase context, file edits, shell commands, git integration</td></tr>
+          <tr><td><strong>Aider</strong></td><td>AI pair programming</td><td>Works with any LLM (local or API), git-aware, multi-file edits</td></tr>
+        </tbody>
+      </table>
+
+      <hr style="margin: 40px 0; border-color: #334155;">
+
+      <h3>8. Data Layer — Structured & Unstructured Data</h3>
+      <p>The persistent storage layer for your application data, metadata, and state.</p>
+      <table>
+        <thead>
+          <tr><th>Database</th><th>Type</th><th>Best For</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>PostgreSQL</strong></td><td>Relational (OLTP)</td><td>Application state, user data, transactional workloads, pgvector for embeddings</td></tr>
+          <tr><td><strong>DuckDB</strong></td><td>Analytical (OLAP)</td><td>Local analytics, Parquet/CSV queries, in-process — no server needed</td></tr>
+          <tr><td><strong>Supabase (Free Tier)</strong></td><td>Backend-as-a-Service</td><td>Auth, real-time DB, storage, edge functions — Postgres under the hood</td></tr>
+        </tbody>
+      </table>
+
+      <h3>9. Infrastructure Layer (Local / Self-Hosted)</h3>
+      <p>The compute foundation. Whether it's your laptop or a GPU cluster, this layer provides the raw power for model inference and data processing.</p>
+      <div class="cards-grid">
+        <div class="card" style="cursor: default;">
+          <div class="card-title">🖥️ NVIDIA GB300 GPU Cluster</div>
+          <div class="card-desc">Next-gen inference GPUs for running 70B+ models at production throughput.</div>
+        </div>
+        <div class="card" style="cursor: default;">
+          <div class="card-title">🌐 High Speed Network</div>
+          <div class="card-desc">NVLink / InfiniBand interconnects for multi-GPU and distributed inference.</div>
+        </div>
+        <div class="card" style="cursor: default;">
+          <div class="card-title">💾 Fast Storage (NVMe / SSD)</div>
+          <div class="card-desc">High-throughput storage for model weights, vector indices, and data lakes.</div>
+        </div>
+        <div class="card" style="cursor: default;">
+          <div class="card-title">🧠 Memory Optimized</div>
+          <div class="card-desc">High-RAM configurations for loading large models and KV caches efficiently.</div>
+        </div>
+      </div>
+
+      <h3>10. Deployment Layer — Deploy Anywhere</h3>
+      <p>Package and deploy your AI stack to any environment — from local Docker containers to global edge networks.</p>
+      <table>
+        <thead>
+          <tr><th>Platform</th><th>Use Case</th><th>Cost</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Docker</strong></td><td>Containerized local/cloud deployment</td><td>Free (open-source)</td></tr>
+          <tr><td><strong>Kubernetes</strong></td><td>Orchestrated, auto-scaling production</td><td>Free (open-source)</td></tr>
+          <tr><td><strong>Cloudflare Workers</strong></td><td>Edge deployment, serverless</td><td>Generous free tier</td></tr>
+          <tr><td><strong>Hugging Face Spaces</strong></td><td>Demo & prototype hosting</td><td>Free for CPU instances</td></tr>
+        </tbody>
+      </table>
+
+      <hr style="margin: 40px 0; border-color: #334155;">
+
+      <h2>Observability Layer — Monitor Everything</h2>
+      <p>Full-stack observability across every layer. Traces, metrics, logs, evaluations, and alerts — all open-source.</p>
+      <table>
+        <thead>
+          <tr><th>Tool</th><th>What It Monitors</th><th>Key Feature</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Langfuse</strong></td><td>LLM traces & evaluations</td><td>Track every LLM call, cost, latency, and quality. Open-source Langsmith alternative.</td></tr>
+          <tr><td><strong>OpenTelemetry</strong></td><td>Distributed tracing</td><td>Vendor-neutral instrumentation for services, APIs, and pipelines.</td></tr>
+          <tr><td><strong>Arize Phoenix (Self-Hosted)</strong></td><td>ML observability</td><td>Embedding drift, retrieval quality, LLM evals — all in one UI.</td></tr>
+          <tr><td><strong>Grafana</strong></td><td>Dashboards & alerting</td><td>Visualize metrics from any source. Prometheus, Loki, Tempo integration.</td></tr>
+        </tbody>
+      </table>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <span style="color: #94a3b8; font-size: 0.85em; float: right;">Langfuse Tracing Example</span>
+        </div>
+        <div class="code-content">
+<pre><code>from langfuse import Langfuse
+
+# Self-hosted Langfuse — full data privacy
+lf = Langfuse(
+    public_key="pk-local",
+    secret_key="sk-local",
+    host="http://localhost:3000"  # self-hosted instance
+)
+
+# Trace every LLM call automatically
+trace = lf.trace(name="rag-query", user_id="user-42")
+span = trace.span(name="retrieval", input={"query": "deployment arch"})
+# ... your retrieval logic ...
+span.end(output={"num_chunks": 5, "top_score": 0.92})
+
+generation = trace.generation(
+    name="llm-call",
+    model="llama3.3:70b",
+    input=[{"role": "user", "content": "..."}],
+    output="The deployment architecture uses...",
+    usage={"prompt_tokens": 1200, "completion_tokens": 350}
+)
+
+# View traces at http://localhost:3000
+# Cost: $0 | Data: stays on your server</code></pre>
+        </div>
+      </div>
+
+      <hr style="margin: 40px 0; border-color: #334155;">
+
+      <h2>End-to-End Flow</h2>
+      <p>Here's how a user request flows through the entire stack:</p>
+      <div class="pipeline-flow">
+        <div class="pipeline-step"><strong>User</strong><br>Sends request via UI</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step"><strong>Frontend</strong><br>Next.js / Streamlit</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step"><strong>Agent Orchestrator</strong><br>LangGraph / CrewAI</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step"><strong>LLM</strong><br>Ollama (local)</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step"><strong>RAG / Tools</strong><br>Retrieve & augment</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step"><strong>Data</strong><br>Postgres / DuckDB</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step"><strong>Response</strong><br>Grounded answer</div>
+      </div>
+
+      <hr style="margin: 40px 0; border-color: #334155;">
+
+      <h2>Benefits</h2>
+      <div class="cards-grid">
+        <div class="card" style="cursor: default;">
+          <div class="card-title">✅ Zero Cost to Start</div>
+          <div class="card-desc">Every tool is free or open-source. No credit card, no API keys, no vendor contracts required to build your first AI app.</div>
+        </div>
+        <div class="card" style="cursor: default;">
+          <div class="card-title">✅ Full Data Privacy</div>
+          <div class="card-desc">Models run locally via Ollama. Data stays on your infrastructure. Fully compliant with GDPR, HIPAA, and enterprise security policies.</div>
+        </div>
+        <div class="card" style="cursor: default;">
+          <div class="card-title">✅ Open & Extensible</div>
+          <div class="card-desc">Swap any layer without rewriting the stack. Add new models, databases, or tools without breaking existing workflows.</div>
+        </div>
+        <div class="card" style="cursor: default;">
+          <div class="card-title">✅ Production Ready</div>
+          <div class="card-desc">Not a toy stack. Kubernetes deployment, observability, security, and monitoring are built in from day one.</div>
+        </div>
+        <div class="card" style="cursor: default;">
+          <div class="card-title">✅ End-to-End Solution</div>
+          <div class="card-desc">From user interface to GPU infrastructure — every layer is covered. No gaps, no "and then you figure it out" steps.</div>
+        </div>
+      </div>
+
+      <hr style="margin: 40px 0; border-color: #334155;">
+
+      <h2>Quick Start: Full Stack in 10 Minutes</h2>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <span style="color: #94a3b8; font-size: 0.85em; float: right;">docker-compose.yml bootstrap</span>
+        </div>
+        <div class="code-content">
+<pre><code># 1. Install Ollama and pull a model
+curl -fsSL https://ollama.com/install.sh | sh
+ollama pull gemma4:e4b
+
+# 2. Start vector DB + observability stack
+docker compose up -d qdrant langfuse postgres
+
+# 3. Install Python dependencies
+pip install llama-index langfuse chromadb qdrant-client
+
+# 4. Run your first RAG query
+python -c "
+from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
+from llama_index.llms.ollama import Ollama
+llm = Ollama(model='gemma4:e4b')
+docs = SimpleDirectoryReader('./data').load_data()
+idx = VectorStoreIndex.from_documents(docs, llm=llm)
+print(idx.as_query_engine().query('Summarize the key points'))
+"
+
+# 5. Deploy with Docker
+docker build -t my-ai-app .
+docker run -p 8000:8000 my-ai-app
+
+# Total cost: $0 | Total time: ~10 minutes</code></pre>
+        </div>
+      </div>
     `
   },
 
@@ -4431,6 +4821,7 @@ const NAV_STRUCTURE = [
     title: 'AI Agents & Tool Engineering',
     icon: '🔌',
     children: [
+      { id: 'ai-architecture-stack', title: '$0 AI Architecture Stack', icon: '📄' },
       { id: 'build-ai-gateway', title: 'Build Your Own AI Gateway', icon: '📄' },
       { id: 'mcp-tool-engineering', title: 'Model Context Protocol (MCP)', icon: '📄' },
     ]
