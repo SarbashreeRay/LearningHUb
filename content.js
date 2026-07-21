@@ -105,8 +105,8 @@ const SITE_CONTENT = {
         </div>
         <div class="card" onclick="navigateTo('ai-architecture-stack')">
           <span class="card-icon">🏗️</span>
-          <div class="card-title">$0 AI Architecture Stack</div>
-          <div class="card-desc">Enterprise-grade, open-source, privacy-first AI stack — 2026 Edition</div>
+          <div class="card-title">AI Architecture Stack</div>
+          <div class="card-desc">Enterprise-grade, modular, open-source, privacy-first AI stack</div>
           <div class="card-count">1 notes</div>
         </div>
       </div>
@@ -631,21 +631,21 @@ async def main():
 
   'ai-architecture-stack': {
     id: 'ai-architecture-stack',
-    title: '$0 AI Architecture Stack — 2026 Edition',
+    title: 'AI Architecture Stack',
     category: 'AI Agents & Tool Engineering',
     tags: ['ai-stack', 'architecture', 'open-source', 'llm', 'rag', 'ollama', 'self-hosted'],
     lastUpdated: '2026-07-21',
     body: `
-      <h2>Enterprise-Grade · Open Source · Privacy-First · Cost-Efficient</h2>
+      <h2>Enterprise-Grade · Modular · Open Source · Privacy-First · Cost-Efficient</h2>
       <p>A complete, production-ready AI architecture stack built entirely on <strong>free and open-source tools</strong>. Run locally, maintain full data privacy, and scale from laptop to data center — all at $0 cost to start.</p>
 
       <div class="callout info">
-        <div class="callout-title">💡 Why $0?</div>
-        <div class="callout-body">Every component in this stack is either open-source, has a generous free tier, or runs locally on your hardware. No API keys required to get started. No vendor lock-in. Full ownership of your data and models.</div>
+        <div class="callout-title">💡 Why Open Source & Modular?</div>
+        <div class="callout-body">Every component in this stack is either open-source, has a generous free tier, or runs locally on your hardware. No vendor lock-in. Full ownership of your data, context, and models.</div>
       </div>
 
       <div class="image-container" style="margin: 30px 0; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-        <img src="assets/images/ai-architecture-stack.png" alt="$0 AI Architecture Stack — 2026 Edition" style="width: 100%; height: auto; display: block;" />
+        <img src="assets/images/ai-architecture-stack.png" alt="AI Architecture Stack" style="width: 100%; height: auto; display: block;" />
       </div>
 
       <h3>Key Principles</h3>
@@ -845,23 +845,23 @@ print(response)</code></pre>
       </table>
 
       <h3>9. Infrastructure Layer (Local / Self-Hosted)</h3>
-      <p>The compute foundation. Whether it's your laptop or a GPU cluster, this layer provides the raw power for model inference and data processing.</p>
+      <p>The compute foundation. Whether it's your local workstation or a dedicated GPU cluster, this layer provides the hardware power for model inference and data processing.</p>
       <div class="cards-grid">
         <div class="card" style="cursor: default;">
-          <div class="card-title">🖥️ NVIDIA GB300 GPU Cluster</div>
-          <div class="card-desc">Next-gen inference GPUs for running 70B+ models at production throughput.</div>
+          <div class="card-title">🎮 NVIDIA GPU (Optional)</div>
+          <div class="card-desc">Dedicated GPU hardware acceleration for high-throughput 70B+ model inference.</div>
         </div>
         <div class="card" style="cursor: default;">
-          <div class="card-title">🌐 High Speed Network</div>
-          <div class="card-desc">NVLink / InfiniBand interconnects for multi-GPU and distributed inference.</div>
+          <div class="card-title">💻 Local GPU / CPU Machine</div>
+          <div class="card-desc">Run smaller models (e.g., Gemma 4B, Mistral Small) directly on workstations or laptops.</div>
         </div>
         <div class="card" style="cursor: default;">
           <div class="card-title">💾 Fast Storage (NVMe / SSD)</div>
-          <div class="card-desc">High-throughput storage for model weights, vector indices, and data lakes.</div>
+          <div class="card-desc">High-speed storage for loading model weights, vector indices, and document caches.</div>
         </div>
         <div class="card" style="cursor: default;">
           <div class="card-title">🧠 Memory Optimized</div>
-          <div class="card-desc">High-RAM configurations for loading large models and KV caches efficiently.</div>
+          <div class="card-desc">High RAM allocation for expanding context windows and storing KV caches.</div>
         </div>
       </div>
 
@@ -4821,7 +4821,7 @@ const NAV_STRUCTURE = [
     title: 'AI Agents & Tool Engineering',
     icon: '🔌',
     children: [
-      { id: 'ai-architecture-stack', title: '$0 AI Architecture Stack', icon: '📄' },
+      { id: 'ai-architecture-stack', title: 'AI Architecture Stack', icon: '📄' },
       { id: 'build-ai-gateway', title: 'Build Your Own AI Gateway', icon: '📄' },
       { id: 'mcp-tool-engineering', title: 'Model Context Protocol (MCP)', icon: '📄' },
     ]
