@@ -130,8 +130,8 @@ const SITE_CONTENT = {
         <div class="card" onclick="navigateTo('financial-data-architectures')">
           <span class="card-icon">📈</span>
           <div class="card-title">Designing Financial Data Architectures</div>
-          <div class="card-desc">O'Reilly Framework, 7-Step Trade Lifecycle Simulator & Data Architecture Maturity Model</div>
-          <div class="card-count">Interactive · O'Reilly</div>
+          <div class="card-desc">7-Step Trade Lifecycle Simulator & Data Architecture Maturity Model</div>
+          <div class="card-count">Interactive · Trade & Maturity</div>
         </div>
       </div>
 
@@ -5709,7 +5709,7 @@ FORCE = <span class="kw">FALSE</span>;</pre></div>
   // ─── O'REILLY MODULE: FINANCIAL DATA ARCHITECTURES ─────────
   'financial-data-architectures': {
     id: 'financial-data-architectures',
-    title: 'Designing Financial Data Architectures (O\'Reilly Framework)',
+    title: 'Designing Financial Data Architectures',
     category: 'Banking AI & MLOps Platform',
     tags: ['financial-data', 'data-architecture', 'trade-lifecycle', 'togaf', 'data-silos', 'maturity-model'],
     lastUpdated: '2026-07-23',
@@ -6088,7 +6088,7 @@ const NAV_STRUCTURE = [
     children: [
       { id: 'enterprise-banking-ai-platform', title: 'Enterprise Banking AI Roadmap (12 Phases)', icon: '📄' },
       { id: 'realtime-upi-fraud-platform', title: 'Real-Time UPI Fraud Engine (<50ms SLA)', icon: '📄' },
-      { id: 'financial-data-architectures', title: 'Designing Financial Data Architectures (O\'Reilly)', icon: '📄' },
+      { id: 'financial-data-architectures', title: 'Designing Financial Data Architectures', icon: '📄' },
     ]
   },
 ];
