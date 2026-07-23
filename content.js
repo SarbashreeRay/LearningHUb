@@ -5348,6 +5348,14 @@ FORCE = <span class="kw">FALSE</span>;</pre></div>
     lastUpdated: '2026-07-23',
     body: `
       <h2>Enterprise AI Agent Platform Architecture Roadmap</h2>
+      
+      <div style="margin: 20px 0; text-align: center;">
+        <img src="assets/images/enterprise-banking-ai-platform.png" alt="Enterprise AI Agent Platform Architecture - Banking & Finance Blueprint" style="width: 100%; height: auto; display: block; border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.3); box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);" />
+        <div style="font-size: 0.82rem; color: var(--text-tertiary); margin-top: 8px; font-style: italic;">
+          Figure 1.0: Tier-1 Bank Enterprise AI Agent Platform Blueprint (Security, Governance, Multi-Agent Swarm, Model Gateway, MLOps Lifecycle, Observability & Model Catalog)
+        </div>
+      </div>
+
       <p>Building production AI platforms for Tier-1 Financial Institutions (Banks, Fintechs, Insurance) requires a disciplined <strong>12-Phase Lifecycle</strong> covering business alignment, enterprise data foundations, multi-agent swarms, security guardrails, MLOps, and FinOps cost tracking.</p>
 
       <div class="mermaid">
