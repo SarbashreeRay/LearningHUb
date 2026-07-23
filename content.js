@@ -5337,6 +5337,7 @@ FORCE = <span class="kw">FALSE</span>;</pre></div>
 <span class="cm">-- Step 3: Add consumer Snowflake account ID</span>
 <span class="kw">ALTER SHARE</span> partner_analytics_share <span class="kw">ADD ACCOUNTS</span> = xyz98765;</pre></div>
       </div>
+    `
   },
 
   // ─── BANKING AI MODULE 1: ENTERPRISE ROADMAP ──────────────
