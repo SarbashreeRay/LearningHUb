@@ -1374,6 +1374,112 @@ body::before {
   color: #34D399;
 }
 
+/* ============================================
+   Enterprise Banking AI & UPI Simulator Styles
+   ============================================ */
+
+.bank-widget-card {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 14px;
+  padding: 24px;
+  margin: 24px 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(59, 130, 246, 0.2);
+}
+
+.bank-widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 14px;
+  margin-bottom: 20px;
+}
+
+.bank-widget-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #60A5FA;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bank-badge {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34D399;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.shap-container {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.shap-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+}
+
+.shap-label {
+  width: 140px;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.shap-bar-bg {
+  flex: 1;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 0 12px;
+  position: relative;
+}
+
+.shap-bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.3s ease, background 0.3s ease;
+}
+
+.shap-bar-fill.high { background: #EF4444; }
+.shap-bar-fill.medium { background: #F59E0B; }
+.shap-bar-fill.low { background: #10B981; }
+
+.shap-val {
+  width: 50px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-align: right;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.approve { background: rgba(16, 185, 129, 0.2); color: #34D399; border: 1px solid #10B981; }
+.status-badge.monitor { background: rgba(59, 130, 246, 0.2); color: #60A5FA; border: 1px solid #3B82F6; }
+.status-badge.otp { background: rgba(245, 158, 11, 0.2); color: #FBBF24; border: 1px solid #F59E0B; }
+.status-badge.hold { background: rgba(249, 115, 22, 0.2); color: #FB923C; border: 1px solid #F97316; }
+.status-badge.block { background: rgba(239, 68, 68, 0.2); color: #F87171; border: 1px solid #EF4444; }
+
 /* --- Print Styles --- */
 @media print {
   .sidebar, .mobile-toggle, .breadcrumb-bar, .search-overlay {
@@ -1387,4 +1493,5 @@ body::before {
     color: black;
   }
 }
+
 

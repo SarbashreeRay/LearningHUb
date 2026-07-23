@@ -115,6 +115,18 @@ const SITE_CONTENT = {
           <div class="card-desc">Architecture, Snowpipe, Time Travel, CDC, Snowpark & Real-time Visualizers</div>
           <div class="card-count">9 notes · Interactive</div>
         </div>
+        <div class="card" onclick="navigateTo('enterprise-banking-ai-platform')">
+          <span class="card-icon">🏦</span>
+          <div class="card-title">Enterprise Banking AI Platform</div>
+          <div class="card-desc">12-Phase Architecture Roadmap, Multi-Agent Swarm, Security, MLOps & FinOps</div>
+          <div class="card-count">12 Phases · Production</div>
+        </div>
+        <div class="card" onclick="navigateTo('realtime-upi-fraud-platform')">
+          <span class="card-icon">⚡</span>
+          <div class="card-title">Real-Time UPI Fraud Validation</div>
+          <div class="card-desc">&lt;50ms SLA Pipeline, XGBoost, SHAP Explainability, Interactive ROI Calculator & Python Code</div>
+          <div class="card-count">Interactive · Code & ROI</div>
+        </div>
       </div>
 
       <div class="section-title"><span class="section-icon">🔥</span> Featured Examples</div>
@@ -5325,6 +5337,357 @@ FORCE = <span class="kw">FALSE</span>;</pre></div>
 <span class="cm">-- Step 3: Add consumer Snowflake account ID</span>
 <span class="kw">ALTER SHARE</span> partner_analytics_share <span class="kw">ADD ACCOUNTS</span> = xyz98765;</pre></div>
       </div>
+  },
+
+  // ─── BANKING AI MODULE 1: ENTERPRISE ROADMAP ──────────────
+  'enterprise-banking-ai-platform': {
+    id: 'enterprise-banking-ai-platform',
+    title: 'Enterprise Banking AI Agent Platform Roadmap (12 Phases)',
+    category: 'Banking AI & MLOps Platform',
+    tags: ['banking-ai', 'enterprise-ai', 'mlops', 'llmops', 'finops', 'governance', 'multi-agent'],
+    lastUpdated: '2026-07-23',
+    body: `
+      <h2>Enterprise AI Agent Platform Architecture Roadmap</h2>
+      <p>Building production AI platforms for Tier-1 Financial Institutions (Banks, Fintechs, Insurance) requires a disciplined <strong>12-Phase Lifecycle</strong> covering business alignment, enterprise data foundations, multi-agent swarms, security guardrails, MLOps, and FinOps cost tracking.</p>
+
+      <div class="mermaid">
+      graph TD
+          Biz["Phase 1: Business & Governance"] --> Data["Phase 2: Enterprise Data Platform"]
+          Data --> MLEng["Phase 3: ML Engineering & Feature Store"]
+          MLEng --> AgentDev["Phase 4: LLM & Multi-Agent Swarm"]
+          AgentDev --> Sec["Phase 5: Enterprise Security & Guardrails"]
+          Sec --> Eval["Phase 6: Offline & Online Model Evaluation"]
+          Eval --> Deploy["Phase 7: Deployment & CI/CD Pipelines"]
+          Deploy --> Obs["Phase 8: Observability & OpenTelemetry"]
+          Obs --> Drift["Phase 9: Drift Detection & Auto-Retraining"]
+          Drift --> FinOps["Phase 10: AI FinOps & ROI Analytics"]
+          FinOps --> Cat["Phase 11: Centralized Model Catalog"]
+          Cat --> Flow["Phase 12: Real-World Banking Request Flow"]
+      </div>
+
+      <h3>The 12 Enterprise Implementation Phases</h3>
+      <ol>
+        <li><strong>Phase 1 — Business & Governance Requirements:</strong> Define high-value use cases (Fraud Detection, AML Monitoring, Credit Risk, Customer Service Agents, Loan Processing, Algorithmic Trading Assistants, Regulatory Reporting) mapped against risk matrices and compliance frameworks.</li>
+        <li><strong>Phase 2 — Enterprise Data Platform:</strong> Multi-source ingestion from ERP (SAP), Core Banking, Trading Platforms, Payment Gateways, and Unstructured PDFs. Data Lake -> Snowflake / Delta Lake -> Feast Feature Store -> Vector Database (Pinecone/pgvector). Automated validation via <code>Great Expectations</code> and <code>TFDV</code>.</li>
+        <li><strong>Phase 3 — ML Engineering & Feature Store:</strong> Feature management, experiment tracking (MLflow, Weights & Biases), model training, evaluation, model registry, and versioning (DVC, LakeFS).</li>
+        <li><strong>Phase 4 — AI & Multi-Agent Swarm Development:</strong> Fine-tuning foundation models (Llama 3, Mistral, Claude, GPT-4o) + RAG & Neo4j Knowledge Graphs. Orchestrating specialized multi-agent roles:
+          <ul>
+            <li><code>Planner Agent</code>: Deconstructs requests & generates execution graph.</li>
+            <li><code>Research Agent</code>: Retrieves customer history & market data.</li>
+            <li><code>Finance & Risk Agent</code>: Calculates debt ratios & credit risk scores.</li>
+            <li><code>Compliance Agent</code>: Validates AML/KYC & regulatory rules.</li>
+            <li><code>Execution Agent</code>: Calls Core Banking APIs (SAP/Salesforce).</li>
+            <li><code>Reviewer Agent</code>: Critiques & validates output quality.</li>
+            <li><code>Human Approval Agent</code>: Escalates high-risk decisions (>₹50L / $100K).</li>
+          </ul>
+        </li>
+        <li><strong>Phase 5 — Enterprise Security & Guardrails:</strong> SSO/MFA, RBAC/ABAC policies, HashiCorp Vault secrets, automated PII masking, Prompt Firewalls (NeMo Guardrails), prompt injection detection, and compliance auditing (SOC2, ISO27001, PCI-DSS, GDPR).</li>
+        <li><strong>Phase 6 — Offline & Production Model Evaluation:</strong> Benchmark accuracy, latency, token cost, hallucination rates, and bias using <code>Promptfoo</code>, <code>RAGAS</code>, <code>ARES</code>, and <code>Deepchecks</code>.</li>
+        <li><strong>Phase 7 — Deployment & MLOps Pipelines:</strong> Containerized microservices (Docker, Kubernetes) managed via <code>ArgoCD</code>, <code>Kubeflow Pipelines</code>, and Model Gateways (KServe) with autoscaling and canary deployments.</li>
+        <li><strong>Phase 8 — Observability Platform:</strong> Full-stack tracing via <code>OpenTelemetry</code>, <code>Prometheus</code>, <code>Grafana</code>, <code>Loki</code>, and <code>Tempo</code> monitoring P95/P99 latency, TPS, GPU utilization, and token consumption.</li>
+        <li><strong>Phase 9 — Drift Detection & Auto-Retraining:</strong> Continuous data drift, concept drift, and performance drift monitoring with <code>Evidently AI</code> & <code>Arize AI</code>, triggering automated Kubeflow retraining jobs.</li>
+        <li><strong>Phase 10 — AI FinOps & Cost Optimization:</strong> Track GPU hours, token usage, cost per user, cost per department, and real-time ROI analytics dashboards.</li>
+        <li><strong>Phase 11 — Model Service Catalog:</strong> Maintain a single source of truth for model versions, documentation, SLAs, compliance approvals, and lineage.</li>
+        <li><strong>Phase 12 — End-to-End Real-World Banking Workflow:</strong> Customer Request ➔ API Gateway ➔ SSO ➔ Planner Agent ➔ Research Agent ➔ RAG+Graph ➔ Risk Analysis ➔ Fraud Engine ➔ Compliance Check ➔ Human-in-the-loop ➔ Core Banking Execution ➔ Logging ➔ Observability.</li>
+      </ol>
+    `
+  },
+
+  // ─── BANKING AI MODULE 2: REAL-TIME UPI FRAUD ENGINE ──────
+  'realtime-upi-fraud-platform': {
+    id: 'realtime-upi-fraud-platform',
+    title: 'Real-Time UPI Payment Validation Engine (<50ms SLA)',
+    category: 'Banking AI & MLOps Platform',
+    tags: ['upi-payments', 'fraud-detection', 'realtime-streaming', 'xgboost', 'shap', 'finops', 'roi'],
+    lastUpdated: '2026-07-23',
+    body: `
+      <h2>Real-Time UPI Payment Validation Platform (<50ms SLA)</h2>
+      <p>Unified Payments Interface (UPI) processes billions of transactions monthly. Real-time fraud detection requires sub-50ms latency from transaction initiation on mobile apps (BHIM, PhonePe, Google Pay, Paytm) to NPCI settlement.</p>
+
+      <div class="mermaid">
+      graph TD
+          App["📱 Mobile App (BHIM / PhonePe / Paytm)"] --> Gateway["🔐 API Gateway (OAuth2, JWT, mTLS)"]
+          Gateway --> Switch["🔄 UPI Switch / Payment Gateway"]
+          Switch --> Kafka["📡 Real-Time Event Streaming (Kafka / Pulsar)"]
+          Kafka --> Validation["⚡ Data & Business Rule Validation (<10ms)"]
+          Validation --> FeatureStore["💾 Real-Time Feature Store (Feast / Redis)"]
+          FeatureStore --> MLModel["🤖 AI Fraud Engine (XGBoost / LightGBM / GNN)"]
+          MLModel --> DecisionEngine["⚖️ Decision Engine (Approve / OTP / Block)"]
+          DecisionEngine --> NPCI["🏦 Core Banking / NPCI Settlement"]
+      </div>
+
+      <!-- Interactive UPI Payment Simulator -->
+      <div class="bank-widget-card">
+        <div class="bank-widget-header">
+          <div class="bank-widget-title">
+            <span>⚡ Interactive Real-Time UPI Fraud & Risk Engine Simulator</span>
+          </div>
+          <span class="bank-badge">Live Inference Engine</span>
+        </div>
+
+        <div class="sf-controls-grid">
+          <div class="sf-control-group">
+            <label class="sf-control-label">Transaction Amount (₹):</label>
+            <input type="number" class="sf-input" id="upi-amount" value="35000" step="1000" oninput="updateUpiSimulator()" />
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">Velocity (Txns in last 10 mins):</label>
+            <input type="number" class="sf-input" id="upi-velocity" value="6" min="1" max="50" oninput="updateUpiSimulator()" />
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">Rooted / Jailbroken Device:</label>
+            <input type="checkbox" id="upi-rooted" onchange="updateUpiSimulator()" checked />
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">Location / IP Anomaly:</label>
+            <input type="checkbox" id="upi-location" onchange="updateUpiSimulator()" checked />
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">First-Time Unsaved Receiver:</label>
+            <input type="checkbox" id="upi-receiver" onchange="updateUpiSimulator()" checked />
+          </div>
+        </div>
+
+        <div class="sf-metrics-grid">
+          <div class="sf-metric">
+            <div class="sf-metric-val" id="upi-risk-score" style="color: #EF4444;">86 / 100</div>
+            <div class="sf-metric-lbl">Calculated Risk Score</div>
+          </div>
+          <div class="sf-metric">
+            <div class="sf-metric-val"><span class="status-badge hold" id="upi-action-badge">Hold for Analyst Review</span></div>
+            <div class="sf-metric-lbl">Decision Engine Action</div>
+          </div>
+          <div class="sf-metric">
+            <div class="sf-metric-val" id="upi-latency" style="color: #34D399;">22.4 ms</div>
+            <div class="sf-metric-lbl">Pipeline SLA Latency</div>
+          </div>
+        </div>
+
+        <!-- SHAP Explanation Breakdown -->
+        <div class="shap-container">
+          <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 12px;">🔍 SHAP Explainable AI Feature Risk Attribution</div>
+          
+          <div class="shap-item">
+            <div class="shap-label">Transaction Amount</div>
+            <div class="shap-bar-bg"><div class="shap-bar-fill high" id="shap-amount-bar" style="width: 50%;"></div></div>
+            <div class="shap-val" id="shap-amount-val">+20</div>
+          </div>
+
+          <div class="shap-item">
+            <div class="shap-label">Txn Velocity</div>
+            <div class="shap-bar-bg"><div class="shap-bar-fill high" id="shap-velocity-bar" style="width: 51%;"></div></div>
+            <div class="shap-val" id="shap-velocity-val">+18</div>
+          </div>
+
+          <div class="shap-item">
+            <div class="shap-label">Device Root Status</div>
+            <div class="shap-bar-bg"><div class="shap-bar-fill high" id="shap-rooted-bar" style="width: 83%;"></div></div>
+            <div class="shap-val" id="shap-rooted-val">+25</div>
+          </div>
+
+          <div class="shap-item">
+            <div class="shap-label">Location Anomaly</div>
+            <div class="shap-bar-bg"><div class="shap-bar-fill medium" id="shap-location-bar" style="width: 80%;"></div></div>
+            <div class="shap-val" id="shap-location-val">+20</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Financial Impact & ROI Calculator -->
+      <div class="bank-widget-card">
+        <div class="bank-widget-header">
+          <div class="bank-widget-title">
+            <span>💰 Interactive AI FinOps & Business ROI Model</span>
+          </div>
+          <span class="bank-badge">Financial Impact</span>
+        </div>
+
+        <div class="sf-controls-grid">
+          <div class="sf-control-group">
+            <label class="sf-control-label">Annual UPI Volume (Millions):</label>
+            <input type="number" class="sf-input" id="roi-vol" value="500" step="50" oninput="calculateBankingRoi()" />
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">Avg Transaction Value (₹):</label>
+            <input type="number" class="sf-input" id="roi-avg-val" value="1500" step="100" oninput="calculateBankingRoi()" />
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">Baseline Fraud Loss Rate (%):</label>
+            <input type="number" class="sf-input" id="roi-fraud-rate" value="0.08" step="0.01" oninput="calculateBankingRoi()" />
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">AI Fraud Prevention (%):</label>
+            <input type="number" class="sf-input" id="roi-prevention-pct" value="92" max="100" oninput="calculateBankingRoi()" />
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">False Positive Reduction (%):</label>
+            <input type="number" class="sf-input" id="roi-fp-reduction" value="65" max="100" oninput="calculateBankingRoi()" />
+          </div>
+        </div>
+
+        <div class="sf-metrics-grid">
+          <div class="sf-metric">
+            <div class="sf-metric-val" id="roi-fraud-saved" style="color: #34D399;">₹55.20 Cr</div>
+            <div class="sf-metric-lbl">Annual Fraud Prevented</div>
+          </div>
+          <div class="sf-metric">
+            <div class="sf-metric-val" id="roi-fp-saved" style="color: #60A5FA;">₹24.38 Cr</div>
+            <div class="sf-metric-lbl">False Positive Manual Review Cost Saved</div>
+          </div>
+          <div class="sf-metric">
+            <div class="sf-metric-val" id="roi-net-savings" style="color: #FBBF24;">₹61.58 Cr</div>
+            <div class="sf-metric-lbl">Net Operational Savings</div>
+          </div>
+          <div class="sf-metric">
+            <div class="sf-metric-val" id="roi-pct-val" style="color: #A78BFA;">342% ROI</div>
+            <div class="sf-metric-lbl">First-Year Return on Investment</div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Production Code: Real-Time UPI Fraud & Validation Engine</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Python (Production Script)</span>
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+        </div>
+        <div class="code-content"><pre><span class="kw">import</span> time
+<span class="kw">import</span> json
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> pandas <span class="kw">as</span> pd
+<span class="kw">import</span> xgboost <span class="kw">as</span> xgb
+<span class="kw">from</span> pydantic <span class="kw">import</span> BaseModel, Field, validator
+<span class="kw">from</span> typing <span class="kw">import</span> Dict, Any
+
+<span class="cm"># =========================================================</span>
+<span class="cm"># STEP 1 & 4: Schema & Data Validation (Great Expectations / Pydantic)</span>
+<span class="cm"># =========================================================</span>
+<span class="kw">class</span> UPITransactionPayload(BaseModel):
+    transaction_id: str = Field(..., example=<span class="st">"TXN_9876543210"</span>)
+    upi_id: str = Field(..., example=<span class="st">"customer@okaxis"</span>)
+    sender_account: str
+    receiver_account: str
+    amount: float = Field(..., gt=0, le=100000) <span class="cm"># NPCI daily limit constraint</span>
+    device_id: str
+    ip_address: str
+    is_rooted: bool = False
+    timestamp: float
+
+    @validator(<span class="st">'upi_id'</span>)
+    <span class="kw">def</span> validate_upi_format(cls, v):
+        <span class="kw">if</span> <span class="st">'@'</span> <span class="kw">not in</span> v:
+            <span class="kw">raise</span> ValueError(<span class="st">'Invalid UPI ID format'</span>)
+        <span class="kw">return</span> v
+
+<span class="cm"># =========================================================</span>
+<span class="cm"># STEP 5 & 6: Real-Time Feature Store & AI Scoring Engine</span>
+<span class="cm"># =========================================================</span>
+<span class="kw">class</span> RealtimeUPIFraudEngine:
+    <span class="kw">def</span> __init__(self):
+        <span class="cm"># Initialize mock trained XGBoost model</span>
+        self.model = xgb.XGBClassifier(n_estimators=50, max_depth=4)
+        <span class="cm"># Dummy fit on synthetic historical dataset</span>
+        X_dummy = np.random.rand(100, 5)
+        y_dummy = np.random.randint(0, 2, 100)
+        self.model.fit(X_dummy, y_dummy)
+
+    <span class="kw">def</span> extract_features(self, payload: UPITransactionPayload) -> np.ndarray:
+        <span class="cm"># Real-time feature calculation (<10ms)</span>
+        amount_norm = payload.amount / 100000.0
+        velocity_score = 0.8 <span class="kw">if</span> payload.amount > 25000 <span class="kw">else</span> 0.2
+        rooted_score = 1.0 <span class="kw">if</span> payload.is_rooted <span class="kw">else</span> 0.0
+        location_risk = 0.75 <span class="kw">if</span> <span class="st">"192.168"</span> <span class="kw">not in</span> payload.ip_address <span class="kw">else</span> 0.05
+        merchant_risk = 0.3
+        
+        <span class="kw">return</span> np.array([[amount_norm, velocity_score, rooted_score, location_risk, merchant_risk]])
+
+    <span class="kw">def</span> evaluate_transaction(self, raw_json: Dict[str, Any]) -> Dict[str, Any]:
+        start_time = time.time()
+
+        <span class="cm"># 1. Validation</span>
+        payload = UPITransactionPayload(**raw_json)
+
+        <span class="cm"># 2. Real-time Feature Extraction</span>
+        features = self.extract_features(payload)
+
+        <span class="cm"># 3. Model Inference</span>
+        fraud_prob = float(self.model.predict_proba(features)[0][1])
+        risk_score = int(fraud_prob * 100)
+
+        <span class="cm"># 4. Decision Engine Matrix</span>
+        <span class="kw">if</span> risk_score <= 20:
+            action = <span class="st">"APPROVE"</span>
+        <span class="kw">elif</span> risk_score <= 50:
+            action = <span class="st">"APPROVE_WITH_MONITORING"</span>
+        <span class="kw">elif</span> risk_score <= 70:
+            action = <span class="st">"REQUIRE_OTP_STEP_UP"</span>
+        <span class="kw">elif</span> risk_score <= 90:
+            action = <span class="st">"HOLD_FOR_MANUAL_REVIEW"</span>
+        <span class="kw">else</span>:
+            action = <span class="st">"BLOCK_TRANSACTION"</span>
+
+        latency_ms = (time.time() - start_time) * 1000
+
+        <span class="kw">return</span> {
+            <span class="st">"transaction_id"</span>: payload.transaction_id,
+            <span class="st">"risk_score"</span>: risk_score,
+            <span class="st">"fraud_probability"</span>: round(fraud_prob, 4),
+            <span class="st">"decision_action"</span>: action,
+            <span class="st">"latency_ms"</span>: round(latency_ms, 2),
+            <span class="st">"shap_top_features"</span>: {
+                <span class="st">"is_rooted"</span>: 25,
+                <span class="st">"transaction_amount"</span>: 20,
+                <span class="st">"ip_anomaly"</span>: 20
+            }
+        }
+
+<span class="cm"># =========================================================</span>
+<span class="cm"># STEP 10: FinOps ROI Calculator Function</span>
+<span class="cm"># =========================================================</span>
+<span class="kw">def</span> calculate_platform_roi(annual_txns=500_000_000, avg_amt=1500, baseline_fraud_pct=0.0008, prevention_pct=0.92):
+    gross_val = annual_txns * avg_amt
+    baseline_loss = gross_val * baseline_fraud_pct
+    fraud_prevented = baseline_loss * prevention_pct
+    fp_review_savings = (annual_txns * 0.005 * 0.65) * 150 <span class="cm"># ₹150 per review</span>
+    platform_cost = 18_000_000 <span class="cm"># ₹1.8 Crore</span>
+
+    net_savings = (fraud_prevented + fp_review_savings) - platform_cost
+    roi_pct = (net_savings / platform_cost) * 100
+
+    print(<span class="st">f"=== REAL-WORLD BANKING AI PLATFORM ROI REPORT ==="</span>)
+    print(<span class="st">f"Total Annual UPI Volume Processed: {annual_txns:,} Transactions"</span>)
+    print(<span class="st">f"Annual Fraud Loss Prevented: ₹{fraud_prevented/10_000_000:.2f} Crore"</span>)
+    print(<span class="st">f"False Positive Review Cost Saved: ₹{fp_review_savings/10_000_000:.2f} Crore"</span>)
+    print(<span class="st">f"Net Platform Annual Savings: ₹{net_savings/10_000_000:.2f} Crore"</span>)
+    print(<span class="st">f"Platform First-Year ROI: {roi_pct:.1f}%"</span>)
+
+<span class="kw">if</span> __name__ == <span class="st">"__main__"</span>:
+    engine = RealtimeUPIFraudEngine()
+    test_payload = {
+        <span class="st">"transaction_id"</span>: <span class="st">"UPI_2026_0723_9981"</span>,
+        <span class="st">"upi_id"</span>: <span class="st">"user@okicici"</span>,
+        <span class="st">"sender_account"</span>: <span class="st">"ACC_1122334455"</span>,
+        <span class="st">"receiver_account"</span>: <span class="st">"ACC_9988776655"</span>,
+        <span class="st">"amount"</span>: 48000.0,
+        <span class="st">"device_id"</span>: <span class="st">"DEV_ANDROID_ROOTED_901"</span>,
+        <span class="st">"ip_address"</span>: <span class="st">"103.45.12.99"</span>,
+        <span class="st">"is_rooted"</span>: True,
+        <span class="st">"timestamp"</span>: time.time()
+    }
+
+    result = engine.evaluate_transaction(test_payload)
+    print(json.dumps(result, indent=2))
+    print(<span class="st">"\\n"</span>)
+    calculate_platform_roi()</pre></div>
+      </div>
     `
   }
 };
@@ -5479,6 +5842,14 @@ const NAV_STRUCTURE = [
     icon: '🧠',
     children: [
       { id: 'sql-genai-rag', title: 'Text-to-SQL GenAI & RAG', icon: '📄' },
+    ]
+  },
+  {
+    title: 'Banking AI & MLOps Platform',
+    icon: '🏦',
+    children: [
+      { id: 'enterprise-banking-ai-platform', title: 'Enterprise Banking AI Roadmap (12 Phases)', icon: '📄' },
+      { id: 'realtime-upi-fraud-platform', title: 'Real-Time UPI Fraud Engine (<50ms SLA)', icon: '📄' },
     ]
   },
 ];

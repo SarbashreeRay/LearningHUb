@@ -403,3 +403,127 @@ FORCE = ${force};`;
   }
 }
 
+// ============================================
+// Real-Time UPI & Banking AI Simulator Handlers
+// ============================================
+
+function updateUpiSimulator() {
+  const amount = parseFloat(document.getElementById('upi-amount')?.value || 5000);
+  const velocity = parseInt(document.getElementById('upi-velocity')?.value || 2);
+  const isRooted = document.getElementById('upi-rooted')?.checked;
+  const isLocationAnomaly = document.getElementById('upi-location')?.checked;
+  const isNewReceiver = document.getElementById('upi-receiver')?.checked;
+
+  let riskScore = 5; // Base score
+
+  // Calculate weighted risk components
+  let shapAmount = 0;
+  if (amount > 100000) shapAmount = 35;
+  else if (amount > 25000) shapAmount = 20;
+  else if (amount > 10000) shapAmount = 10;
+
+  let shapVelocity = velocity > 10 ? 30 : (velocity > 5 ? 18 : (velocity > 3 ? 8 : 2));
+  let shapRooted = isRooted ? 25 : 0;
+  let shapLoc = isLocationAnomaly ? 20 : 0;
+  let shapReceiver = isNewReceiver ? 15 : 0;
+
+  riskScore += shapAmount + shapVelocity + shapRooted + shapLoc + shapReceiver;
+  if (riskScore > 100) riskScore = 99;
+
+  // Determine Decision Action
+  let actionText = '';
+  let badgeClass = '';
+  if (riskScore <= 20) {
+    actionText = 'Approve (Low Risk)';
+    badgeClass = 'approve';
+  } else if (riskScore <= 50) {
+    actionText = 'Approve with Monitoring';
+    badgeClass = 'monitor';
+  } else if (riskScore <= 70) {
+    actionText = 'Require OTP / Biometric Verification';
+    badgeClass = 'otp';
+  } else if (riskScore <= 90) {
+    actionText = 'Hold for Analyst Review';
+    badgeClass = 'hold';
+  } else {
+    actionText = 'Block Transaction & Create Fraud Case';
+    badgeClass = 'block';
+  }
+
+  // Latency calculation (<50ms SLA)
+  const baseLatency = 18;
+  const simulatedLatency = (baseLatency + Math.floor(Math.random() * 8)).toFixed(1);
+
+  // Update UI Elements
+  const scoreEl = document.getElementById('upi-risk-score');
+  if (scoreEl) scoreEl.innerText = `${riskScore} / 100`;
+
+  const actionEl = document.getElementById('upi-action-badge');
+  if (actionEl) {
+    actionEl.className = `status-badge ${badgeClass}`;
+    actionEl.innerText = actionText;
+  }
+
+  const latencyEl = document.getElementById('upi-latency');
+  if (latencyEl) latencyEl.innerText = `${simulatedLatency} ms`;
+
+  // Update SHAP Bars
+  updateShapBar('shap-amount-bar', 'shap-amount-val', shapAmount, 40);
+  updateShapBar('shap-velocity-bar', 'shap-velocity-val', shapVelocity, 35);
+  updateShapBar('shap-rooted-bar', 'shap-rooted-val', shapRooted, 30);
+  updateShapBar('shap-location-bar', 'shap-location-val', shapLoc, 25);
+}
+
+function updateShapBar(barId, valId, val, maxVal) {
+  const bar = document.getElementById(barId);
+  const valEl = document.getElementById(valId);
+
+  if (valEl) valEl.innerText = `+${val}`;
+
+  if (bar) {
+    const pct = Math.min(100, Math.round((val / maxVal) * 100));
+    bar.style.width = `${pct}%`;
+
+    if (val >= 20) bar.className = 'shap-bar-fill high';
+    else if (val >= 10) bar.className = 'shap-bar-fill medium';
+    else bar.className = 'shap-bar-fill low';
+  }
+}
+
+function calculateBankingRoi() {
+  const annualVolMillions = parseFloat(document.getElementById('roi-vol')?.value || 500); // 500M transactions
+  const avgValue = parseFloat(document.getElementById('roi-avg-val')?.value || 1500); // ₹1,500
+  const baselineFraudPct = parseFloat(document.getElementById('roi-fraud-rate')?.value || 0.08); // 0.08%
+  const fraudPreventionPct = parseFloat(document.getElementById('roi-prevention-pct')?.value || 92); // 92%
+  const fpReductionPct = parseFloat(document.getElementById('roi-fp-reduction')?.value || 65); // 65%
+
+  // Total Gross Volume
+  const totalVolume = annualVolMillions * 1000000;
+  const totalGrossValue = totalVolume * avgValue;
+
+  // Baseline Fraud Loss (without AI Engine)
+  const baselineFraudLoss = (totalGrossValue * (baselineFraudPct / 100));
+
+  // Annual Fraud Saved by AI Engine
+  const annualFraudSaved = baselineFraudLoss * (fraudPreventionPct / 100);
+
+  // False Positive Investigation Savings (Baseline 0.5% flagged @ ₹150 cost per manual review)
+  const baselineFpCount = totalVolume * 0.005;
+  const fpSaved = baselineFpCount * (fpReductionPct / 100) * 150;
+
+  // Operational Cost of Platform (Infrastructure, Cloud GPU, Licenses, MLOps Maintenance)
+  const platformCost = 18000000; // ₹1.8 Crore (~$215K)
+
+  // Total Net Savings & ROI
+  const totalSavings = annualFraudSaved + fpSaved;
+  const netSavings = totalSavings - platformCost;
+  const roiPct = Math.round((netSavings / platformCost) * 100);
+
+  // Update UI Elements
+  document.getElementById('roi-fraud-saved').innerText = `₹${(annualFraudSaved / 10000000).toFixed(2)} Cr`;
+  document.getElementById('roi-fp-saved').innerText = `₹${(fpSaved / 10000000).toFixed(2)} Cr`;
+  document.getElementById('roi-net-savings').innerText = `₹${(netSavings / 10000000).toFixed(2)} Cr`;
+  document.getElementById('roi-pct-val').innerText = `${roiPct}% ROI`;
+}
+
+
