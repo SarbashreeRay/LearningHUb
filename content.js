@@ -133,6 +133,12 @@ const SITE_CONTENT = {
           <div class="card-desc">7-Step Trade Lifecycle Simulator & Data Architecture Maturity Model</div>
           <div class="card-count">Interactive · Trade & Maturity</div>
         </div>
+        <div class="card" onclick="navigateTo('enterprise-financial-data-architecture')">
+          <span class="card-icon">🏛️</span>
+          <div class="card-title">Enterprise Financial Data Architecture</div>
+          <div class="card-desc">10-Layer Stack, Medallion Pipeline (Bronze/Silver/Gold), Security Matrix & Python Script</div>
+          <div class="card-count">Production · Code & Matrix</div>
+        </div>
       </div>
 
       <div class="section-title"><span class="section-icon">🔥</span> Featured Examples</div>
@@ -5927,6 +5933,212 @@ FORCE = <span class="kw">FALSE</span>;</pre></div>
         </div>
       </div>
     `
+  },
+
+  // ─── ENTERPRISE FINANCIAL DATA ARCHITECTURE MODULE ─────────
+  'enterprise-financial-data-architecture': {
+    id: 'enterprise-financial-data-architecture',
+    title: 'Enterprise Financial Data Architecture',
+    category: 'Banking AI & MLOps Platform',
+    tags: ['financial-data', 'architecture', 'medallion', 'kafka', 'mlops', 'upi-payments', 'security'],
+    lastUpdated: '2026-07-23',
+    body: `
+      <h2>Enterprise Financial Data Architecture Blueprint</h2>
+      <p>This architecture is representative of what large financial institutions, payment gateways (UPI), and tier-1 banks use to support high-volume, low-latency transaction processing while integrating modern Medallion data lakes, MLOps pipelines, AI governance, and FinOps cost tracking.</p>
+
+      <div class="mermaid">
+      graph TD
+          Ch["📱 Users & Channels (Mobile App, UPI, ATM, POS, Trading, CRM)"] --> Sec["🔐 API Gateway & Security (OAuth2, JWT, mTLS, Vault, WAF)"]
+          Sec --> Proc["💳 Transaction Processing (NPCI UPI Switch, Core Banking)"]
+          Proc --> Stream["📡 Event Streaming (Kafka / Pulsar / Debezium CDC)"]
+          Stream --> Val["⚡ Real-Time Validation & Enrichment (KYC, AML, Fraud Rules)"]
+          Val --> Feat["💾 Feature Engineering (Feast Feature Store & Redis)"]
+          Feat --> DataPlat["📊 Data Platform (Bronze ➔ Silver ➔ Gold Medallion Lakehouse)"]
+          DataPlat --> AIPlat["🤖 AI & Analytics Platform (Fraud, Credit Risk, AML, RAG)"]
+          AIPlat --> Serving["🚀 Model Serving (KServe / Seldon Core / FastAPI)"]
+          Serving --> Obs["👁️ Monitoring & Governance (Evidently AI, OpenTelemetry, Grafana)"]
+          Obs --> BI["📈 Business Intelligence (Power BI, Regulatory Reporting, CFO Dashboard)"]
+      </div>
+
+      <h3>9-Step End-to-End Data Flow Pipeline</h3>
+      <ol>
+        <li><strong>Transaction Capture:</strong> UPI payment, Card payment, ATM withdrawal, Internet banking, Trading order, Loan request.</li>
+        <li><strong>API Security:</strong> OAuth2, JWT, mTLS, WAF, Rate limiting, Device authentication.</li>
+        <li><strong>Event Streaming:</strong> Kafka topics, CDC from Oracle/PostgreSQL, Event replay, Dead-letter queues.</li>
+        <li><strong>Validation:</strong> KYC verification, AML checks, Balance validation, Merchant validation, Duplicate detection, Transaction limits.</li>
+        <li><strong>Data Processing:</strong> Real-time enrichment, Currency conversion, Customer profile lookup, Fraud indicators, Device intelligence.</li>
+        <li><strong>Medallion Storage:</strong> Bronze (raw immutable events) ➔ Silver (cleaned and validated data) ➔ Gold (business-ready aggregates).</li>
+        <li><strong>AI Platform:</strong> Fraud prediction, Credit risk scoring, Churn prediction, Customer segmentation, Recommendations, LLM-powered financial assistants.</li>
+        <li><strong>Model Deployment:</strong> REST APIs, gRPC services, Batch scoring, Streaming inference.</li>
+        <li><strong>Observability & Monitoring:</strong> Data drift, Concept drift, Latency SLA, Token usage (for LLMs), Infrastructure costs.</li>
+      </ol>
+
+      <h3>Enterprise Security & MLOps Matrix</h3>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Architecture Dimension</th>
+            <th>Enterprise Security Controls & Stack</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Identity & Access</strong></td>
+            <td>SSO, OAuth2, MFA, RBAC, ABAC, HashiCorp Vault, AWS Secrets Manager</td>
+          </tr>
+          <tr>
+            <td><strong>API & Data Security</strong></td>
+            <td>JWT, mTLS, API Gateway (Kong/Apigee), WAF, AES-256 Encryption, TLS 1.3, PII Masking</td>
+          </tr>
+          <tr>
+            <td><strong>Compliance Standards</strong></td>
+            <td>PCI-DSS, ISO 27001, GDPR, SOC 2, RBI Guidelines, BCBS 239 Risk Aggregation</td>
+          </tr>
+          <tr>
+            <td><strong>Data Validation</strong></td>
+            <td>Great Expectations, TensorFlow Data Validation (TFDV)</td>
+          </tr>
+          <tr>
+            <td><strong>Feature Store & Lineage</strong></td>
+            <td>Feast Feature Store, Redis (Low Latency), LakeFS</td>
+          </tr>
+          <tr>
+            <td><strong>Experimentation & Serving</strong></td>
+            <td>MLflow, Weights & Biases, Kubeflow Pipelines, KServe, Seldon Core, FastAPI</td>
+          </tr>
+          <tr>
+            <td><strong>Observability & Drift</strong></td>
+            <td>Evidently AI, Arize AI, Deepchecks, OpenTelemetry, Prometheus, Grafana, Loki, Tempo</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Key Business KPIs</h3>
+      <ul>
+        <li><strong>Transactions per Second (TPS):</strong> 10,000+ peak throughput capacity.</li>
+        <li><strong>Payment Success Rate:</strong> >99.95% completed transactions.</li>
+        <li><strong>Fraud Detection Rate:</strong> >95% fraud prevented before settlement.</li>
+        <li><strong>False Positive Rate:</strong> &lt;0.5% flagged clean transactions.</li>
+        <li><strong>P95 / P99 API SLA Latency:</strong> Sub-50ms streaming inference SLA.</li>
+        <li><strong>Platform Availability:</strong> 99.99%+ uptime (High Availability multi-region cluster).</li>
+      </ul>
+
+      <h3>Production Code: Enterprise Financial Data Architecture Pipeline</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Python (Enterprise Pipeline Script)</span>
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+        </div>
+        <div class="code-content"><pre><span class="kw">import</span> time
+<span class="kw">import</span> json
+<span class="kw">import</span> datetime
+<span class="kw">from</span> typing <span class="kw">import</span> Dict, Any, List
+
+<span class="cm"># =========================================================</span>
+<span class="cm"># STEP 1, 2 & 4: API Ingestion & Streaming Schema Validation</span>
+<span class="cm"># =========================================================</span>
+<span class="kw">class</span> FinancialEventValidator:
+    @staticmethod
+    <span class="kw">def</span> validate_security_context(headers: Dict[str, str]) -> bool:
+        <span class="cm"># Verify mTLS & OAuth2 JWT token presence</span>
+        token = headers.get(<span class="st">"Authorization"</span>, <span class="st">""</span>)
+        mtls_verified = headers.get(<span class="st">"X-mTLS-Client-Verify"</span>, <span class="st">""</span>) == <span class="st">"SUCCESS"</span>
+        <span class="kw">return</span> token.startswith(<span class="st">"Bearer "</span>) <span class="kw">and</span> mtls_verified
+
+    @staticmethod
+    <span class="kw">def</span> validate_payload_schema(payload: Dict[str, Any]) -> bool:
+        required_fields = [<span class="st">"txn_id"</span>, <span class="st">"account_id"</span>, <span class="st">"amount"</span>, <span class="st">"currency"</span>, <span class="st">"timestamp"</span>]
+        <span class="kw">return</span> all(f <span class="kw">in</span> payload <span class="kw">for</span> f <span class="kw">in</span> required_fields) <span class="kw">and</span> payload[<span class="st">"amount"</span>] > 0
+
+<span class="cm"># =========================================================</span>
+<span class="cm"># STEP 6: Medallion Architecture Storage Engine</span>
+<span class="cm"># =========================================================</span>
+<span class="kw">class</span> MedallionDataPlatform:
+    <span class="kw">def</span> __init__(self):
+        self.bronze_lake: List[Dict[str, Any]] = [] <span class="cm"># Raw immutable append-only storage</span>
+        self.silver_lake: List[Dict[str, Any]] = [] <span class="cm"># Cleaned & enriched transactional records</span>
+        self.gold_analytics: Dict[str, float] = {} <span class="cm"># Aggregated business dimensions</span>
+
+    <span class="kw">def</span> ingest_bronze(self, raw_event: Dict[str, Any]):
+        <span class="cm"># Raw storage preserves original payload with ingestion timestamp</span>
+        raw_record = raw_event.copy()
+        raw_record[<span class="st">"_ingested_at"</span>] = datetime.datetime.utcnow().isoformat()
+        self.bronze_lake.append(raw_record)
+        <span class="kw">return</span> raw_record
+
+    <span class="kw">def</span> process_silver(self, bronze_record: Dict[str, Any]) -> Dict[str, Any]:
+        <span class="cm"># Cleaning, PII masking, type casting & currency standardization</span>
+        silver_record = {
+            <span class="st">"txn_id"</span>: bronze_record[<span class="st">"txn_id"</span>],
+            <span class="st">"masked_account"</span>: <span class="st">"ACC_***_"</span> + str(bronze_record[<span class="st">"account_id"</span>])[-4:],
+            <span class="st">"amount_usd"</span>: float(bronze_record[<span class="st">"amount"</span>]), <span class="cm"># Base currency conversion</span>
+            <span class="st">"is_suspicious"</span>: bronze_record.get(<span class="st">"risk_score"</span>, 0) > 70,
+            <span class="st">"timestamp"</span>: bronze_record[<span class="st">"timestamp"</span>]
+        }
+        self.silver_lake.append(silver_record)
+        <span class="kw">return</span> silver_record
+
+    <span class="kw">def</span> update_gold(self, silver_record: Dict[str, Any]):
+        <span class="cm"># Aggregating daily total volume & fraud counters</span>
+        acc = silver_record[<span class="st">"masked_account"</span>]
+        self.gold_analytics[acc] = self.gold_analytics.get(acc, 0.0) + silver_record[<span class="st">"amount_usd"</span>]
+
+<span class="cm"># =========================================================</span>
+<span class="cm"># STEP 7 & 9: AI Platform Scoring & Observability Emissions</span>
+<span class="cm"># =========================================================</span>
+<span class="kw">class</span> EnterpriseFinancialPipeline:
+    <span class="kw">def</span> __init__(self):
+        self.data_platform = MedallionDataPlatform()
+
+    <span class="kw">def</span> process_stream_event(self, headers: Dict[str, str], payload: Dict[str, Any]) -> Dict[str, Any]:
+        start_time = time.time()
+
+        <span class="cm"># 1. API Security Check</span>
+        <span class="kw">if</span> <span class="kw">not</span> FinancialEventValidator.validate_security_context(headers):
+            <span class="kw">return</span> {<span class="st">"status"</span>: <span class="st">"REJECTED"</span>, <span class="st">"reason"</span>: <span class="st">"Security Authentication Failed (mTLS/OAuth2)"</span>}
+
+        <span class="cm"># 2. Schema Validation</span>
+        <span class="kw">if</span> <span class="kw">not</span> FinancialEventValidator.validate_payload_schema(payload):
+            <span class="kw">return</span> {<span class="st">"status"</span>: <span class="st">"REJECTED"</span>, <span class="st">"reason"</span>: <span class="st">"Schema Validation Contract Failed"</span>}
+
+        <span class="cm"># 3. Bronze Ingestion</span>
+        bronze_record = self.data_platform.ingest_bronze(payload)
+
+        <span class="cm"># 4. AI Risk Model Inference</span>
+        risk_score = 15 <span class="kw">if</span> payload[<span class="st">"amount"</span>] < 10000 <span class="kw">else</span> 78
+        bronze_record[<span class="st">"risk_score"</span>] = risk_score
+
+        <span class="cm"># 5. Silver Transformation</span>
+        silver_record = self.data_platform.process_silver(bronze_record)
+
+        <span class="cm"># 6. Gold Aggregation</span>
+        self.data_platform.update_gold(silver_record)
+
+        latency_ms = (time.time() - start_time) * 1000
+
+        <span class="kw">return</span> {
+            <span class="st">"status"</span>: <span class="st">"PROCESSED"</span>,
+            <span class="st">"txn_id"</span>: payload[<span class="st">"txn_id"</span>],
+            <span class="st">"risk_score"</span>: risk_score,
+            <span class="st">"medallion_stage"</span>: <span class="st">"Bronze -> Silver -> Gold Updated"</span>,
+            <span class="st">"p99_latency_ms"</span>: round(latency_ms, 2)
+        }
+
+<span class="kw">if</span> __name__ == <span class="st">"__main__"</span>:
+    pipeline = EnterpriseFinancialPipeline()
+    headers = {<span class="st">"Authorization"</span>: <span class="st">"Bearer eyJhbGciOi..."</span>, <span class="st">"X-mTLS-Client-Verify"</span>: <span class="st">"SUCCESS"</span>}
+    payload = {
+        <span class="st">"txn_id"</span>: <span class="st">"FIN_2026_99812"</span>,
+        <span class="st">"account_id"</span>: <span class="st">"ACC_90812345"</span>,
+        <span class="st">"amount"</span>: 14500.00,
+        <span class="st">"currency"</span>: <span class="st">"USD"</span>,
+        <span class="st">"timestamp"</span>: time.time()
+    }
+
+    result = pipeline.process_stream_event(headers, payload)
+    print(json.dumps(result, indent=2))</pre></div>
+      </div>
+    `
   }
 };
 
@@ -6089,6 +6301,7 @@ const NAV_STRUCTURE = [
       { id: 'enterprise-banking-ai-platform', title: 'Enterprise Banking AI Roadmap (12 Phases)', icon: '📄' },
       { id: 'realtime-upi-fraud-platform', title: 'Real-Time UPI Fraud Engine (<50ms SLA)', icon: '📄' },
       { id: 'financial-data-architectures', title: 'Designing Financial Data Architectures', icon: '📄' },
+      { id: 'enterprise-financial-data-architecture', title: 'Enterprise Financial Data Architecture', icon: '📄' },
     ]
   },
 ];
