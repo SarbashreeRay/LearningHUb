@@ -308,3 +308,98 @@ window.addEventListener('hashchange', () => {
     navigateTo('home');
   }
 });
+
+// ============================================
+// Snowflake Interactive Widget Handlers
+// ============================================
+
+function updateWarehouseCalc() {
+  const sizeSelect = document.getElementById('sf-wh-size');
+  const clustersInput = document.getElementById('sf-wh-clusters');
+  const hoursInput = document.getElementById('sf-wh-hours');
+  const rateInput = document.getElementById('sf-wh-rate');
+
+  if (!sizeSelect || !clustersInput || !hoursInput || !rateInput) return;
+
+  const baseCredits = parseFloat(sizeSelect.value) || 1;
+  const maxClusters = parseInt(clustersInput.value) || 1;
+  const activeHours = parseFloat(hoursInput.value) || 8;
+  const creditRate = parseFloat(rateInput.value) || 3.0;
+
+  // Credits per hour range
+  const minCreditsHr = baseCredits;
+  const maxCreditsHr = baseCredits * maxClusters;
+
+  // Monthly calculation (30 days)
+  const monthlyMinCredits = minCreditsHr * activeHours * 30;
+  const monthlyMaxCredits = maxCreditsHr * activeHours * 30;
+  const monthlyMinCost = monthlyMinCredits * creditRate;
+  const monthlyMaxCost = monthlyMaxCredits * creditRate;
+
+  // Concurrency limit per cluster (8 queries per server)
+  const concurrency = maxClusters * (baseCredits * 8);
+
+  document.getElementById('sf-credits-hr').innerText = maxClusters > 1 ? `${minCreditsHr}-${maxCreditsHr} Cr` : `${minCreditsHr} Cr`;
+  document.getElementById('sf-monthly-credits').innerText = `${monthlyMinCredits.toLocaleString()}-${monthlyMaxCredits.toLocaleString()} Cr`;
+  document.getElementById('sf-monthly-cost').innerText = `$${monthlyMinCost.toLocaleString(undefined, {maximumFractionDigits:0})} - $${monthlyMaxCost.toLocaleString(undefined, {maximumFractionDigits:0})}`;
+  document.getElementById('sf-concurrency').innerText = `${concurrency} Queries`;
+  
+  const clusterValEl = document.getElementById('sf-clusters-val');
+  if (clusterValEl) clusterValEl.innerText = `${maxClusters} Cluster${maxClusters > 1 ? 's' : ''}`;
+  const hoursValEl = document.getElementById('sf-hours-val');
+  if (hoursValEl) hoursValEl.innerText = `${activeHours} hrs/day`;
+}
+
+function scrubTimeline(daysAgo) {
+  const days = parseInt(daysAgo);
+  const now = new Date();
+  const targetDate = new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
+  const isoStr = targetDate.toISOString().replace('T', ' ').substring(0, 19);
+
+  const sqlEl = document.getElementById('sf-tt-sql');
+  const statusEl = document.getElementById('sf-tt-status');
+  const nodeA = document.getElementById('sf-node-a');
+  const nodeB = document.getElementById('sf-node-b');
+  const cloneEl = document.getElementById('sf-tt-clone');
+
+  if (sqlEl) {
+    sqlEl.innerText = `SELECT * FROM sales_fact AT(TIMESTAMP => '${isoStr}'::timestamp_tz);`;
+  }
+
+  if (statusEl && nodeA && nodeB) {
+    if (days === 0) {
+      statusEl.innerText = `State: CURRENT (Live production view with active writes)`;
+      nodeA.className = 'sf-pointer-node active';
+      nodeB.className = 'sf-pointer-node active';
+      if (cloneEl) cloneEl.innerText = `CREATE TABLE sales_clone CLONE sales_fact; -- Instant zero-copy metadata pointer!`;
+    } else if (days <= 7) {
+      statusEl.innerText = `State: TIME TRAVEL ACTIVE (${days} day(s) ago) - Queryable without restoring!`;
+      nodeA.className = 'sf-pointer-node active';
+      nodeB.className = 'sf-pointer-node';
+      if (cloneEl) cloneEl.innerText = `CREATE TABLE sales_past CLONE sales_fact AT(TIMESTAMP => '${isoStr}'::timestamp_tz);`;
+    } else {
+      statusEl.innerText = `State: FAIL-SAFE STORAGE (${days} days ago) - Historical storage active, non-queryable directly (Contact Snowflake Support)`;
+      nodeA.className = 'sf-pointer-node';
+      nodeB.className = 'sf-pointer-node';
+      if (cloneEl) cloneEl.innerText = `-- Beyond Time Travel window. Recoverable via Fail-Safe request.`;
+    }
+  }
+}
+
+function updateCopyPreview() {
+  const fmt = document.getElementById('sf-copy-fmt')?.value || 'CSV';
+  const onError = document.getElementById('sf-copy-error')?.value || 'CONTINUE';
+  const purge = document.getElementById('sf-copy-purge')?.checked ? 'TRUE' : 'FALSE';
+  const force = document.getElementById('sf-copy-force')?.checked ? 'TRUE' : 'FALSE';
+
+  const previewEl = document.getElementById('sf-copy-code');
+  if (previewEl) {
+    previewEl.innerText = `COPY INTO analytics.raw_events
+FROM @my_s3_stage/incoming/2026/
+FILE_FORMAT = (TYPE = '${fmt}' ${fmt === 'CSV' ? "FIELD_DELIMITER = ',' SKIP_HEADER = 1" : "STRIP_OUTER_ARRAY = TRUE"})
+ON_ERROR = '${onError}'
+PURGE = ${purge}
+FORCE = ${force};`;
+  }
+}
+

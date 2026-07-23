@@ -109,6 +109,12 @@ const SITE_CONTENT = {
           <div class="card-desc">Enterprise-grade, modular, open-source, privacy-first AI stack</div>
           <div class="card-count">1 notes</div>
         </div>
+        <div class="card" onclick="navigateTo('snowflake-architecture')">
+          <span class="card-icon">❄️</span>
+          <div class="card-title">Snowflake Data Warehouse</div>
+          <div class="card-desc">Architecture, Snowpipe, Time Travel, CDC, Snowpark & Real-time Visualizers</div>
+          <div class="card-count">9 notes · Interactive</div>
+        </div>
       </div>
 
       <div class="section-title"><span class="section-icon">🔥</span> Featured Examples</div>
@@ -4812,6 +4818,514 @@ query.awaitTermination()</pre></div>
     asyncio.run(main())</pre></div>
       </div>
     `
+  },
+
+  // ─── SNOWFLAKE MODULE 1: ARCHITECTURE ─────────────────────
+  'snowflake-architecture': {
+    id: 'snowflake-architecture',
+    title: 'Snowflake Architecture & Virtual Warehouses',
+    category: 'Data Warehouse (Snowflake)',
+    tags: ['snowflake', 'architecture', 'virtual-warehouse', 'cloud-services', 'micro-partitions', 'cost-optimization'],
+    lastUpdated: '2026-07-23',
+    body: `
+      <h2>Snowflake Multi-Cluster Shared Data Architecture</h2>
+      <p>Snowflake features a revolutionary 3-layer architecture that physically decouples <strong>Compute</strong>, <strong>Storage</strong>, and <strong>Cloud Services</strong>. This enables independent scaling, instant zero-copy cloning, and linear concurrency performance.</p>
+
+      <div class="mermaid">
+      graph TD
+          CS["☁️ Cloud Services Layer<br/>(Auth, Metadata, Query Optimizer, Access Control)"]
+          CS --> VW1["⚡ Virtual Warehouse 1<br/>(ETL Workload - X-Large)"]
+          CS --> VW2["⚡ Virtual Warehouse 2<br/>(BI & Dashboard - Multi-Cluster)"]
+          CS --> VW3["⚡ Virtual Warehouse 3<br/>(Snowpark ML Training)"]
+          VW1 --> ST["💾 Centralized S3 / Azure Blob / GCS Storage<br/>(Immutable Micro-Partitions)"]
+          VW2 --> ST
+          VW3 --> ST
+      </div>
+
+      <h3>1. The 3 Architectural Layers</h3>
+      <ul>
+        <li><strong>Cloud Services Layer:</strong> The brain of Snowflake. Manages user authentication, security, metadata, query parsing/optimization, and transaction control (ACID compliance). Automatically managed without credit cost for small queries.</li>
+        <li><strong>Query Processing Layer (Virtual Warehouses):</strong> Pure compute nodes (EC2/Azure VMs). Warehouses are stateless, MPP (Massively Parallel Processing) compute clusters that execute SQL queries against shared storage.</li>
+        <li><strong>Database Storage Layer:</strong> Immutable, highly compressed micro-partitions stored in cloud blob storage. Accessible only via Virtual Warehouses.</li>
+      </ul>
+
+      <!-- Interactive Virtual Warehouse Credit & Cost Simulator -->
+      <div class="sf-widget-card">
+        <div class="sf-widget-header">
+          <div class="sf-widget-title">
+            <span>⚡ Interactive Virtual Warehouse Credit & Cost Simulator</span>
+          </div>
+          <span class="sf-badge">Real-time Calculator</span>
+        </div>
+
+        <div class="sf-controls-grid">
+          <div class="sf-control-group">
+            <label class="sf-control-label">Warehouse Size:</label>
+            <select class="sf-select" id="sf-wh-size" onchange="updateWarehouseCalc()">
+              <option value="1">X-Small (1 Credit/hr - 1 Server)</option>
+              <option value="2">Small (2 Credits/hr - 2 Servers)</option>
+              <option value="4" selected>Medium (4 Credits/hr - 4 Servers)</option>
+              <option value="8">Large (8 Credits/hr - 8 Servers)</option>
+              <option value="16">X-Large (16 Credits/hr - 16 Servers)</option>
+              <option value="32">2X-Large (32 Credits/hr - 32 Servers)</option>
+              <option value="64">3X-Large (64 Credits/hr - 64 Servers)</option>
+              <option value="128">4X-Large (128 Credits/hr - 128 Servers)</option>
+            </select>
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">Multi-Cluster Scaling (Max Clusters: <span id="sf-clusters-val">2</span>):</label>
+            <input type="range" class="sf-slider" id="sf-wh-clusters" min="1" max="10" value="2" oninput="updateWarehouseCalc()" />
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">Active Hours / Day (<span id="sf-hours-val">8</span> hrs):</label>
+            <input type="range" class="sf-slider" id="sf-wh-hours" min="1" max="24" value="8" oninput="updateWarehouseCalc()" />
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">Credit Rate ($ / Credit):</label>
+            <input type="number" class="sf-input" id="sf-wh-rate" value="3.00" step="0.5" oninput="updateWarehouseCalc()" />
+          </div>
+        </div>
+
+        <div class="sf-metrics-grid">
+          <div class="sf-metric">
+            <div class="sf-metric-val" id="sf-credits-hr">4-8 Cr</div>
+            <div class="sf-metric-lbl">Credits / Hour</div>
+          </div>
+          <div class="sf-metric">
+            <div class="sf-metric-val" id="sf-monthly-credits">960-1,920 Cr</div>
+            <div class="sf-metric-lbl">Est. Monthly Credits</div>
+          </div>
+          <div class="sf-metric">
+            <div class="sf-metric-val" id="sf-monthly-cost">$2,880 - $5,760</div>
+            <div class="sf-metric-lbl">Est. Monthly Cost</div>
+          </div>
+          <div class="sf-metric">
+            <div class="sf-metric-val" id="sf-concurrency">64 Queries</div>
+            <div class="sf-metric-lbl">Max Concurrency</div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Production DDL: Virtual Warehouse Creation</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">SQL</span>
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+        </div>
+        <div class="code-content"><pre><span class="kw">CREATE OR REPLACE WAREHOUSE</span> bi_analytics_wh
+  <span class="kw">WITH</span> WAREHOUSE_SIZE = <span class="st">'MEDIUM'</span>
+  AUTO_SUSPEND = <span class="cm">60</span>             <span class="cm">-- Suspend cluster after 60s of inactivity</span>
+  AUTO_RESUME = <span class="kw">TRUE</span>             <span class="cm">-- Auto-start instantly on incoming query</span>
+  MIN_CLUSTER_COUNT = <span class="cm">1</span>          <span class="cm">-- Scale down to 1 cluster during off-peak</span>
+  MAX_CLUSTER_COUNT = <span class="cm">5</span>          <span class="cm">-- Auto-scale up to 5 clusters under heavy concurrency</span>
+  SCALING_POLICY = <span class="st">'STANDARD'</span>    <span class="cm">-- Standard aggressive scale-up</span>
+  COMMENT = <span class="st">'Multi-cluster warehouse for production dashboards'</span>;</pre></div>
+      </div>
+    `
+  },
+
+  // ─── SNOWFLAKE MODULE 2: DATA LOADING & STAGES ───────────
+  'snowflake-data-loading': {
+    id: 'snowflake-data-loading',
+    title: 'Data Loading Masterclass & Stages',
+    category: 'Data Warehouse (Snowflake)',
+    tags: ['snowflake', 'data-loading', 'stages', 'copy-into', 's3', 'parquet', 'json'],
+    lastUpdated: '2026-07-23',
+    body: `
+      <h2>Data Loading & Stage Management</h2>
+      <p>Snowflake supports both internal stages (hosted inside Snowflake storage) and external stages (cloud storage in S3, GCS, or Azure Blob). High-performance bulk loading is achieved using the <code>COPY INTO</code> command.</p>
+
+      <h3>Stage Types Matrix</h3>
+      <ul>
+        <li><strong>User Stage (<code>@~</code>):</strong> Private stage tied to a specific Snowflake user.</li>
+        <li><strong>Table Stage (<code>@%table_name</code>):</strong> Stage tied to a target table. Available to all users with privileges on that table.</li>
+        <li><strong>Named Internal Stage (<code>@my_stage</code>):</strong> Reusable internal stage with explicit file format parameters.</li>
+        <li><strong>Named External Stage (<code>@s3_stage</code>):</strong> Points directly to an S3 bucket or cloud location using Storage Integrations.</li>
+      </ul>
+
+      <!-- Interactive COPY INTO Configurator -->
+      <div class="sf-widget-card">
+        <div class="sf-widget-header">
+          <div class="sf-widget-title">
+            <span>⚙️ Interactive COPY INTO Command Sandbox</span>
+          </div>
+          <span class="sf-badge">SQL Generator</span>
+        </div>
+
+        <div class="sf-controls-grid">
+          <div class="sf-control-group">
+            <label class="sf-control-label">File Format:</label>
+            <select class="sf-select" id="sf-copy-fmt" onchange="updateCopyPreview()">
+              <option value="CSV" selected>CSV (Comma Delimited)</option>
+              <option value="PARQUET">Parquet (Columnar)</option>
+              <option value="JSON">JSON (Semi-Structured)</option>
+            </select>
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">ON_ERROR Strategy:</label>
+            <select class="sf-select" id="sf-copy-error" onchange="updateCopyPreview()">
+              <option value="CONTINUE">CONTINUE (Skip faulty rows)</option>
+              <option value="ABORT_STATEMENT" selected>ABORT_STATEMENT (Rollback on error)</option>
+              <option value="SKIP_FILE">SKIP_FILE (Skip corrupted file)</option>
+            </select>
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">PURGE Source Files after Load:</label>
+            <input type="checkbox" id="sf-copy-purge" onchange="updateCopyPreview()" />
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">FORCE Reload existing files:</label>
+            <input type="checkbox" id="sf-copy-force" onchange="updateCopyPreview()" />
+          </div>
+        </div>
+
+        <div class="code-block" style="margin-top: 10px;">
+          <div class="code-header">
+            <span class="code-lang">Generated Dynamic SQL</span>
+          </div>
+          <div class="code-content"><pre id="sf-copy-code"><span class="kw">COPY INTO</span> analytics.raw_events
+<span class="kw">FROM</span> @my_s3_stage/incoming/2026/
+FILE_FORMAT = (TYPE = <span class="st">'CSV'</span> FIELD_DELIMITER = <span class="st">','</span> SKIP_HEADER = 1)
+ON_ERROR = <span class="st">'ABORT_STATEMENT'</span>
+PURGE = <span class="kw">FALSE</span>
+FORCE = <span class="kw">FALSE</span>;</pre></div>
+        </div>
+      </div>
+
+      <h3>Querying Semi-Structured JSON Data Directly</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">SQL</span>
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+        </div>
+        <div class="code-content"><pre><span class="cm">-- Parse and flatten JSON payload on the fly using lateral joins</span>
+<span class="kw">SELECT</span>
+  src.v:<span class="st">event_id</span>::<span class="kw">STRING</span>           <span class="kw">AS</span> event_id,
+  src.v:<span class="st">timestamp</span>::<span class="kw">TIMESTAMP_NTZ</span>  <span class="kw">AS</span> event_time,
+  f.value:<span class="st">item_id</span>::<span class="kw">STRING</span>         <span class="kw">AS</span> item_id,
+  f.value:<span class="st">price</span>::<span class="kw">NUMBER</span>(10,2)     <span class="kw">AS</span> item_price
+<span class="kw">FROM</span> raw_json_table src,
+<span class="kw">LATERAL FLATTEN</span>(input => src.v:<span class="st">cart_items</span>) f;</pre></div>
+      </div>
+    `
+  },
+
+  // ─── SNOWFLAKE MODULE 3: SNOWPIPE STREAMING ───────────────
+  'snowflake-snowpipe-streaming': {
+    id: 'snowflake-snowpipe-streaming',
+    title: 'Snowpipe & Real-Time Data Ingestion',
+    category: 'Data Warehouse (Snowflake)',
+    tags: ['snowflake', 'snowpipe', 'streaming', 'real-time', 'kafka', 'sqs'],
+    lastUpdated: '2026-07-23',
+    body: `
+      <h2>Snowpipe & Real-Time Ingestion Architecture</h2>
+      <p>Snowpipe provides automated serverless data ingestion from S3, Azure Blob, or GCP GCS as soon as files land in cloud storage. For sub-second low latency, the <strong>Snowpipe Streaming API</strong> streams rows directly into micro-partitions bypassing stage files.</p>
+
+      <div class="mermaid">
+      graph LR
+          App["📱 Mobile / IoT Apps"] --> Kafka["📡 Apache Kafka Topic"]
+          Kafka --> S3["☁️ AWS S3 Incoming Bucket"]
+          S3 -- "Object Created Event" --> SQS["📬 AWS SQS Queue"]
+          SQS -- "Auto Ingest Notification" --> Pipe["⚡ Snowpipe Serverless Engine"]
+          Pipe --> Table["❄️ Snowflake Production Table"]
+      </div>
+
+      <h3>Bulk COPY vs Snowpipe vs Snowpipe Streaming</h3>
+      <ul>
+        <li><strong>COPY INTO:</strong> Scheduled batch loads. Uses user Virtual Warehouse compute.</li>
+        <li><strong>Snowpipe Auto-Ingest:</strong> Event-driven file loading (minute-level latency). Uses serverless Snowflake compute.</li>
+        <li><strong>Snowpipe Streaming API:</strong> Sub-second rowset ingestion directly into target tables via Python/Java SDK.</li>
+      </ul>
+
+      <h3>Production Snowpipe Auto-Ingest DDL</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">SQL</span>
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+        </div>
+        <div class="code-content"><pre><span class="cm">-- Step 1: Create automated pipe linked to S3 notification queue</span>
+<span class="kw">CREATE OR REPLACE PIPE</span> raw_logs_db.public.pipe_clickstream
+  AUTO_INGEST = <span class="kw">TRUE</span>
+  AWS_SNS_TOPIC = <span class="st">'arn:aws:sns:us-east-1:123456789012:s3-new-file-topic'</span>
+<span class="kw">AS</span>
+  <span class="kw">COPY INTO</span> raw_logs_db.public.clickstream_events
+  <span class="kw">FROM</span> @raw_logs_db.public.s3_clickstream_stage
+  FILE_FORMAT = (TYPE = <span class="st">'JSON'</span>);
+
+<span class="cm">-- Step 2: Check pipe status & backlogged file queue</span>
+<span class="kw">SELECT</span> SYSTEM$PIPE_STATUS(<span class="st">'pipe_clickstream'</span>);</pre></div>
+      </div>
+    `
+  },
+
+  // ─── SNOWFLAKE MODULE 4: TABLES, TIME TRAVEL & CLONING ─────
+  'snowflake-tables-cloning': {
+    id: 'snowflake-tables-cloning',
+    title: 'Table Types, Time Travel & Zero-Copy Cloning',
+    category: 'Data Warehouse (Snowflake)',
+    tags: ['snowflake', 'time-travel', 'zero-copy-cloning', 'undrop', 'transient-tables'],
+    lastUpdated: '2026-07-23',
+    body: `
+      <h2>Time Travel & Instant Zero-Copy Cloning</h2>
+      <p>Snowflake's continuous data protection allows querying and restoring data as it existed at any point in time within the retention period (up to 90 days). <strong>Zero-Copy Cloning</strong> creates instant environments without duplicating underlying micro-partition storage.</p>
+
+      <!-- Interactive Time Travel & Zero-Copy Scrubber -->
+      <div class="sf-widget-card">
+        <div class="sf-widget-header">
+          <div class="sf-widget-title">
+            <span>⏱️ Interactive Time Travel & Metadata Pointer Visualizer</span>
+          </div>
+          <span class="sf-badge">Live Timeline</span>
+        </div>
+
+        <div class="sf-control-group">
+          <label class="sf-control-label">Scrub Time Horizon: <span id="sf-tt-days">0</span> Day(s) Ago</label>
+          <input type="range" class="sf-slider" min="0" max="10" value="0" oninput="document.getElementById('sf-tt-days').innerText=this.value; scrubTimeline(this.value);" />
+        </div>
+
+        <div class="sf-timeline-box">
+          <div id="sf-tt-status" style="font-weight: 700; color: #38BDF8; margin-bottom: 8px;">
+            State: CURRENT (Live production view with active writes)
+          </div>
+          <div class="code-block" style="margin: 0;">
+            <div class="code-content"><pre id="sf-tt-sql">SELECT * FROM sales_fact AT(TIMESTAMP => CURRENT_TIMESTAMP());</pre></div>
+          </div>
+
+          <div class="sf-pointer-visual">
+            <div class="sf-pointer-node active" id="sf-node-a">Micro-Partition #101 (Original)</div>
+            <div style="color: var(--text-tertiary);">➔ Metadata Pointers ➔</div>
+            <div class="sf-pointer-node active" id="sf-node-b">Micro-Partition #102 (Delta)</div>
+          </div>
+          <div id="sf-tt-clone" style="font-family: var(--font-mono); font-size: 0.8rem; color: #34D399; margin-top: 10px; text-align: center;">
+            CREATE TABLE sales_clone CLONE sales_fact; -- Instant zero-copy metadata pointer!
+          </div>
+        </div>
+      </div>
+
+      <h3>Restoring Dropped Tables & Point-In-Time SQL</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">SQL</span>
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+        </div>
+        <div class="code-content"><pre><span class="cm">-- Restore accidentally dropped table instantly</span>
+<span class="kw">UNDROP TABLE</span> production.sales_fact;
+
+<span class="cm">-- Query data prior to a faulty UPDATE statement using Query ID</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> production.sales_fact 
+<span class="kw">BEFORE</span>(STATEMENT => <span class="st">'01a2b3c4-0000-1111-2222-333344445555'</span>);
+
+<span class="cm">-- Instant zero-copy clone of entire Production DB to Staging</span>
+<span class="kw">CREATE DATABASE</span> staging_db <span class="kw">CLONE</span> production_db;</pre></div>
+      </div>
+    `
+  },
+
+  // ─── SNOWFLAKE MODULE 5: STREAMS, TASKS & SCD TYPE 2 ──────
+  'snowflake-streams-tasks-scd': {
+    id: 'snowflake-streams-tasks-scd',
+    title: 'Change Data Capture (CDC), Streams, Tasks & SCD Type 2',
+    category: 'Data Warehouse (Snowflake)',
+    tags: ['snowflake', 'cdc', 'streams', 'tasks', 'scd-type-2', 'merge'],
+    lastUpdated: '2026-07-23',
+    body: `
+      <h2>Continuous Data Pipelines with Streams & Tasks</h2>
+      <p>Snowflake Streams capture Change Data Capture (CDC) records (INSERTS, UPDATES, DELETES) from source tables. Automated Tasks execute SQL pipelines on a schedule or when a stream contains data.</p>
+
+      <div class="mermaid">
+      graph LR
+          Source["📥 Orders Staging Table"] --> Stream["🌊 Orders CDC Stream"]
+          Stream --> Task1["⚙️ Task: Process CDC (Every 15 mins)"]
+          Task1 --> DimTable["📊 Dim_Customer (SCD Type 2 MERGE)"]
+          Task1 --> FactTable["📈 Fact_Orders (Append Only)"]
+      </div>
+
+      <h3>Stream Metadata Columns</h3>
+      <ul>
+        <li><code>METADATA$ACTION</code>: Action type (<code>INSERT</code> or <code>DELETE</code>).</li>
+        <li><code>METADATA$ISUPDATE</code>: Boolean flag (<code>TRUE</code> for UPDATE row pairs).</li>
+        <li><code>METADATA$ROW_ID</code>: Unique immutable row identifier for tracking.</li>
+      </ul>
+
+      <h3>Production SCD Type 2 Pipeline via Streams & MERGE</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">SQL</span>
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+        </div>
+        <div class="code-content"><pre><span class="cm">-- Step 1: Create CDC Stream on source staging table</span>
+<span class="kw">CREATE OR REPLACE STREAM</span> stg_customer_stream <span class="kw">ON TABLE</span> stg_customer;
+
+<span class="cm">-- Step 2: Automated Task executing MERGE for SCD Type 2</span>
+<span class="kw">CREATE OR REPLACE TASK</span> process_customer_scd2_task
+  SCHEDULE = <span class="st">'USING CRON */15 * * * * UTC'</span>
+  WHEN SYSTEM$STREAM_HAS_DATA(<span class="st">'stg_customer_stream'</span>)
+<span class="kw">AS</span>
+  <span class="kw">MERGE INTO</span> dim_customer target
+  <span class="kw">USING</span> (
+    <span class="kw">SELECT</span> customer_id, name, email, <span class="st">'INSERT'</span> <span class="kw">AS</span> merge_action
+    <span class="kw">FROM</span> stg_customer_stream
+    <span class="kw">WHERE</span> METADATA$ACTION = <span class="st">'INSERT'</span>
+  ) src
+  <span class="kw">ON</span> target.customer_id = src.customer_id <span class="kw">AND</span> target.is_current = <span class="kw">TRUE</span>
+  <span class="kw">WHEN MATCHED THEN UPDATE SET</span> target.is_current = <span class="kw">FALSE</span>, target.end_date = CURRENT_TIMESTAMP()
+  <span class="kw">WHEN NOT MATCHED THEN INSERT</span> (customer_id, name, email, is_current, start_date)
+  <span class="kw">VALUES</span> (src.customer_id, src.name, src.email, <span class="kw">TRUE</span>, CURRENT_TIMESTAMP());</pre></div>
+      </div>
+    `
+  },
+
+  // ─── SNOWFLAKE MODULE 6: PERFORMANCE & CLUSTERING ─────────
+  'snowflake-performance-clustering': {
+    id: 'snowflake-performance-clustering',
+    title: 'Performance Tuning, Micro-partitions & Clustering',
+    category: 'Data Warehouse (Snowflake)',
+    tags: ['snowflake', 'performance', 'micro-partitions', 'clustering-keys', 'materialized-views'],
+    lastUpdated: '2026-07-23',
+    body: `
+      <h2>Micro-partitions & Pruning Efficiency</h2>
+      <p>Snowflake automatically partitions data into <strong>micro-partitions</strong> (50MB - 150MB uncompressed). Micro-partition metadata (min/max values per column) allows the query optimizer to prune unnecessary micro-partitions during execution.</p>
+
+      <h3>Clustering Keys & Automatic Clustering</h3>
+      <p>For multi-terabyte tables, explicitly defining a <strong>Clustering Key</strong> groups related data together, maximizing partition pruning for target filters.</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">SQL</span>
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+        </div>
+        <div class="code-content"><pre><span class="cm">-- Define clustering key on high-cardinality date & region columns</span>
+<span class="kw">ALTER TABLE</span> sales_fact <span class="kw">CLUSTER BY</span> (DATE_TRUNC(<span class="st">'month'</span>, sale_date), region_code);
+
+<span class="cm">-- Inspect table clustering depth and partition statistics</span>
+<span class="kw">SELECT</span> SYSTEM$CLUSTERING_INFORMATION(<span class="st">'sales_fact'</span>);</pre></div>
+      </div>
+    `
+  },
+
+  // ─── SNOWFLAKE MODULE 7: SECURITY & GOVERNANCE ─────────────
+  'snowflake-security-governance': {
+    id: 'snowflake-security-governance',
+    title: 'Security, Governance, RBAC & Resource Monitors',
+    category: 'Data Warehouse (Snowflake)',
+    tags: ['snowflake', 'security', 'rbac', 'data-masking', 'row-access-policy', 'resource-monitors'],
+    lastUpdated: '2026-07-23',
+    body: `
+      <h2>Security, Governance & Access Control</h2>
+      <p>Snowflake uses Discretionary Access Control (DAC) and Role-Based Access Control (RBAC). Privileges are granted to roles, and roles are granted to users or other parent roles.</p>
+
+      <div class="mermaid">
+      graph TD
+          AA["👑 ACCOUNTADMIN"] --> SA["🛡️ SECURITYADMIN"]
+          SA --> UA["👤 USERADMIN"]
+          AA --> SY["⚙️ SYSADMIN"]
+          SY --> DE["💼 DATA_ENGINEER_ROLE"]
+          SY --> AN["📊 ANALYST_ROLE"]
+          DE --> UserAlice["👤 Alice (Data Engineer)"]
+          AN --> UserBob["👤 Bob (BI Analyst)"]
+      </div>
+
+      <h3>Dynamic Data Masking Policy DDL</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">SQL</span>
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+        </div>
+        <div class="code-content"><pre><span class="cm">-- Create PII masking policy (Only ACCOUNTADMIN sees raw SSN)</span>
+<span class="kw">CREATE OR REPLACE MASKING POLICY</span> mask_ssn <span class="kw">AS</span> (val <span class="kw">STRING</span>) <span class="kw">RETURNS STRING</span> ->
+  <span class="kw">CASE</span>
+    <span class="kw">WHEN</span> CURRENT_ROLE() <span class="kw">IN</span> (<span class="st">'ACCOUNTADMIN'</span>, <span class="st">'HR_PRIVILEGED_ROLE'</span>) <span class="kw">THEN</span> val
+    <span class="kw">ELSE</span> <span class="st">'***-**-'</span> || RIGHT(val, 4)
+  <span class="kw">END</span>;
+
+<span class="cm">-- Apply policy to column</span>
+<span class="kw">ALTER TABLE</span> hr.employees <span class="kw">MODIFY COLUMN</span> ssn <span class="kw">SET MASKING POLICY</span> mask_ssn;</pre></div>
+      </div>
+    `
+  },
+
+  // ─── SNOWFLAKE MODULE 8: SNOWPARK & CORTEX AI ──────────────
+  'snowflake-snowpark-cortex': {
+    id: 'snowflake-snowpark-cortex',
+    title: 'Snowpark Python & Snowflake Cortex AI',
+    category: 'Data Warehouse (Snowflake)',
+    tags: ['snowflake', 'snowpark', 'python', 'cortex-ai', 'llm', 'vector-search'],
+    lastUpdated: '2026-07-23',
+    body: `
+      <h2>Snowpark Python & Generative AI (Cortex)</h2>
+      <p>Snowpark brings native Python execution directly into Snowflake compute. Snowflake Cortex provides instant SQL functions for LLMs, Vector Embeddings, Sentiment Analysis, and Translation.</p>
+
+      <h3>Cortex GenAI SQL Functions</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">SQL</span>
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+        </div>
+        <div class="code-content"><pre><span class="cm">-- LLM completion using Cortex SQL</span>
+<span class="kw">SELECT</span> SNOWFLAKE.CORTEX.COMPLETE(
+  <span class="st">'mistral-large'</span>,
+  <span class="st">'Summarize key feedback points from customer review: '</span> || review_text
+) <span class="kw">AS</span> summary
+<span class="kw">FROM</span> customer_reviews
+<span class="kw">LIMIT</span> 5;</pre></div>
+      </div>
+
+      <h3>Snowpark Python DataFrame Code</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Python</span>
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+        </div>
+        <div class="code-content"><pre><span class="kw">from</span> snowflake.snowpark <span class="kw">import</span> Session
+<span class="kw">from</span> snowflake.snowpark.functions <span class="kw">import</span> col, avg
+
+<span class="kw">def</span> main(session: Session):
+    <span class="cm"># Lazy DataFrame execution pushed down to Snowflake Warehouses</span>
+    df = session.table(<span class="st">"sales_fact"</span>) \\
+                .filter(col(<span class="st">"amount"</span>) > 100) \\
+                .group_by(<span class="st">"region"</span>) \\
+                .agg(avg(<span class="st">"amount"</span>).alias(<span class="st">"avg_sale"</span>))
+    
+    <span class="kw">return</span> df</pre></div>
+      </div>
+    `
+  },
+
+  // ─── SNOWFLAKE MODULE 9: SECURE DATA SHARING ───────────────
+  'snowflake-data-sharing': {
+    id: 'snowflake-data-sharing',
+    title: 'Secure Data Sharing, Clean Rooms & Marketplace',
+    category: 'Data Warehouse (Snowflake)',
+    tags: ['snowflake', 'data-sharing', 'marketplace', 'clean-rooms', 'reader-accounts'],
+    lastUpdated: '2026-07-23',
+    body: `
+      <h2>Secure Data Sharing & Data Clean Rooms</h2>
+      <p>Snowflake Secure Data Sharing allows instant sharing of databases, schemas, and secure views across Snowflake accounts without copying or transferring data. Consumers read directly from the provider's storage partitions with zero duplication costs.</p>
+
+      <h3>Direct Data Share Creation DDL</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">SQL</span>
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+        </div>
+        <div class="code-content"><pre><span class="cm">-- Step 1: Create share container</span>
+<span class="kw">CREATE SHARE</span> partner_analytics_share;
+
+<span class="cm">-- Step 2: Grant database & table read privileges to share</span>
+<span class="kw">GRANT USAGE ON DATABASE</span> sales_db <span class="kw">TO SHARE</span> partner_analytics_share;
+<span class="kw">GRANT USAGE ON SCHEMA</span> sales_db.public <span class="kw">TO SHARE</span> partner_analytics_share;
+<span class="kw">GRANT SELECT ON TABLE</span> sales_db.public.aggregated_metrics <span class="kw">TO SHARE</span> partner_analytics_share;
+
+<span class="cm">-- Step 3: Add consumer Snowflake account ID</span>
+<span class="kw">ALTER SHARE</span> partner_analytics_share <span class="kw">ADD ACCOUNTS</span> = xyz98765;</pre></div>
+      </div>
+    `
   }
 };
 
@@ -4949,7 +5463,15 @@ const NAV_STRUCTURE = [
     title: 'Data Warehouse (Snowflake)',
     icon: '❄️',
     children: [
-      { id: 'snowflake-architecture', title: 'Snowflake Architecture & Snowpipe', icon: '📄' },
+      { id: 'snowflake-architecture', title: 'Architecture & Compute Simulator', icon: '📄' },
+      { id: 'snowflake-data-loading', title: 'Data Loading & Stages', icon: '📄' },
+      { id: 'snowflake-snowpipe-streaming', title: 'Snowpipe & Real-Time Ingestion', icon: '📄' },
+      { id: 'snowflake-tables-cloning', title: 'Time Travel & Zero-Copy Clone', icon: '📄' },
+      { id: 'snowflake-streams-tasks-scd', title: 'Streams, Tasks & SCD Type 2', icon: '📄' },
+      { id: 'snowflake-performance-clustering', title: 'Micro-partitions & Tuning', icon: '📄' },
+      { id: 'snowflake-security-governance', title: 'Security, RBAC & Governance', icon: '📄' },
+      { id: 'snowflake-snowpark-cortex', title: 'Snowpark Python & Cortex AI', icon: '📄' },
+      { id: 'snowflake-data-sharing', title: 'Secure Data Sharing & Clean Rooms', icon: '📄' },
     ]
   },
   {
