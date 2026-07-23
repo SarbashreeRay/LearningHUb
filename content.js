@@ -5715,7 +5715,7 @@ FORCE = <span class="kw">FALSE</span>;</pre></div>
     lastUpdated: '2026-07-23',
     body: `
       <h2>Designing Financial Data Architectures</h2>
-      <p>Based on the O'Reilly framework by Tamer Khraisha, a <strong>Financial Data Architecture</strong> is a domain-specific blueprint for collecting, storing, sharing, and integrating financial data while satisfying strict regulatory, performance, and governance requirements.</p>
+      <p>A <strong>Financial Data Architecture</strong> is a domain-specific blueprint for collecting, storing, sharing, and integrating financial data while satisfying strict regulatory, performance, and governance requirements.</p>
 
       <div class="mermaid">
       graph LR
