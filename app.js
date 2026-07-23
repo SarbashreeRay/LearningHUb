@@ -625,5 +625,75 @@ function calculateMaturity() {
   if (scoreEl) scoreEl.innerText = `${avgScore.toFixed(1)} / 5.0 Rating`;
 }
 
+// ============================================
+// AI Coding Agent Workflows & Prompt Generator Handlers
+// ============================================
+
+function generateAiPromptSpec() {
+  const stack = document.getElementById('agent-stack')?.value || 'FastAPI';
+  const db = document.getElementById('agent-db')?.value || 'PostgreSQL';
+  const pattern = document.getElementById('agent-pattern')?.value || 'Repository Pattern';
+  const security = document.getElementById('agent-security')?.value || 'OWASP + JWT';
+
+  const generatedPrompt = `### 🎯 PRODUCTION-GRADE AI AGENT PROMPT & SPECIFICATION
+
+**Product Spec**
+Feature: User Authentication & Security Services
+Actors: Customer, Admin
+Requirements:
+  - Login using Email/Password with Bcrypt hashing
+  - JWT Authentication (Access + Refresh tokens)
+  - MFA Support (TOTP / OTP)
+  - Password Reset & OAuth2 Integration
+
+**Technical Spec**
+Framework: ${stack}
+Database: ${db}
+Architecture: ${pattern}
+Security Policy: ${security}
+Deployment: Docker + Kubernetes (Helm)
+CI/CD: GitHub Actions
+
+**Context Engineering Package (/docs)**
+- Architecture Blueprint: \`/docs/architecture.md\`
+- Coding Guidelines (PEP8, SOLID, DRY): \`/docs/coding_guidelines.md\`
+- Database Schema: \`/docs/database.sql\`
+- OpenAPI Contract: \`/docs/api_contracts.yaml\`
+
+**Prompt Instructions for AI Coding Agent:**
+"Build a production-grade REST API service using ${stack} adhering strictly to ${pattern} and ${security} guardrails.
+Include Pydantic/Data Models, SQLAlchemy ORM, Dependency Injection, Pytest integration test suite (min 90% coverage), and Docker containerization.
+Do NOT hallucinate endpoints. Strictly follow /docs/api_contracts.yaml."`;
+
+  const outputEl = document.getElementById('agent-prompt-output');
+  if (outputEl) outputEl.innerText = generatedPrompt;
+}
+
+let currentAgentStep = 0;
+function runAgentLoopStep() {
+  const steps = [
+    { num: 1, name: 'PLAN', log: 'Planner Agent: Analyzed PRD & /docs context. Created task graph of 4 microservices.' },
+    { num: 2, name: 'GENERATE', log: 'Coding Agent: Generated FastAPI endpoints, Pydantic DTOs & SQLAlchemy models.' },
+    { num: 3, name: 'COMPILE / LINT', log: 'Quality Agent: Executed Ruff & MyPy. Zero type errors or syntax violations detected.' },
+    { num: 4, name: 'TEST', log: 'Testing Agent: Ran Pytest suite (34 unit tests passed, 100% contract coverage).' },
+    { num: 5, name: 'SECURITY SCAN', log: 'Security Agent: Executed Semgrep & Bandit. OWASP compliance verified.' },
+    { num: 6, name: 'HUMAN REVIEW & DEPLOY', log: 'Merge Coordinator: Pull Request approved by Lead Architect. Deployed to K8s via ArgoCD!' }
+  ];
+
+  currentAgentStep = (currentAgentStep % steps.length) + 1;
+  const active = steps[currentAgentStep - 1];
+
+  const logEl = document.getElementById('agent-loop-log');
+  if (logEl) {
+    logEl.innerText = `[Step ${active.num}/6] ${active.name}\n>>> ${active.log}`;
+  }
+
+  const badgeEl = document.getElementById('agent-step-badge');
+  if (badgeEl) {
+    badgeEl.innerText = `Step ${active.num}: ${active.name}`;
+  }
+}
+
+
 
 

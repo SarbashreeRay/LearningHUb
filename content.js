@@ -109,6 +109,12 @@ const SITE_CONTENT = {
           <div class="card-desc">Enterprise-grade, modular, open-source, privacy-first AI stack</div>
           <div class="card-count">1 notes</div>
         </div>
+        <div class="card" onclick="navigateTo('ai-coding-agent-workflow')">
+          <span class="card-icon">⚡</span>
+          <div class="card-title">AI Coding Agent Workflows</div>
+          <div class="card-desc">Spec-Driven Dev, Context Engineering, Loop Engineering & 2026 Tech Stack</div>
+          <div class="card-count">Interactive · 13 Pillars</div>
+        </div>
         <div class="card" onclick="navigateTo('snowflake-architecture')">
           <span class="card-icon">❄️</span>
           <div class="card-title">Snowflake Data Warehouse</div>
@@ -6139,6 +6145,151 @@ FORCE = <span class="kw">FALSE</span>;</pre></div>
     print(json.dumps(result, indent=2))</pre></div>
       </div>
     `
+  },
+
+  // ─── AI AGENTS MODULE: CODING WORKFLOWS & CONTEXT ENGINEERING ────
+  'ai-coding-agent-workflow': {
+    id: 'ai-coding-agent-workflow',
+    title: 'AI Coding Agent Workflows & Context Engineering (2026 Enterprise Stack)',
+    category: 'AI Agents & Tool Engineering',
+    tags: ['ai-agents', 'coding-agents', 'spec-driven-development', 'context-engineering', 'loop-engineering', 'multi-agent', 'mcp-servers'],
+    lastUpdated: '2026-07-23',
+    body: `
+      <h2>AI Coding Agent Workflows & Context Engineering</h2>
+
+      <div style="margin: 20px 0; text-align: center;">
+        <img src="assets/images/ai-coding-agent-workflow.png" alt="AI Coding Agent Workflow - Spec-Driven Development, Context Engineering, Loop Engineering" style="width: 100%; height: auto; display: block; border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.3); box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);" />
+        <div style="font-size: 0.82rem; color: var(--text-tertiary); margin-top: 8px; font-style: italic;">
+          Figure 1.0: Enterprise AI Coding Agent Workflow Blueprint (Spec-Driven Dev, Context Engineering, Multi-Agent Collaboration, Code Generation Loop & Enterprise CI/CD Integration)
+        </div>
+      </div>
+
+      <p>Modern software engineering with AI agents requires shifting from naive prompt generation to structured <strong>Spec-Driven Development</strong>, <strong>Context Engineering</strong>, and <strong>Loop Engineering</strong>. Providing explicit requirements, architectural context, and automated validation loops dramatically reduces hallucinations and code rework.</p>
+
+      <!-- Interactive AI Agent Prompt & Spec Generator Sandbox -->
+      <div class="bank-widget-card">
+        <div class="bank-widget-header">
+          <div class="bank-widget-title">
+            <span>⚙️ Interactive AI Prompt & Context Package Generator</span>
+          </div>
+          <button class="sf-badge" style="cursor: pointer; border: none;" onclick="generateAiPromptSpec()">🎯 Generate Spec & Prompt</button>
+        </div>
+
+        <div class="sf-controls-grid">
+          <div class="sf-control-group">
+            <label class="sf-control-label">Target Backend Framework:</label>
+            <select class="sf-select" id="agent-stack" onchange="generateAiPromptSpec()">
+              <option value="FastAPI (Python)" selected>FastAPI Microservice (Python 3.11)</option>
+              <option value="Next.js App Router (TypeScript)">Next.js 14 App Router (TypeScript)</option>
+              <option value="PySpark Structured Streaming">PySpark Big Data Pipeline</option>
+              <option value="Go Fiber API">Go Fiber Microservice</option>
+            </select>
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">Database & Storage:</label>
+            <select class="sf-select" id="agent-db" onchange="generateAiPromptSpec()">
+              <option value="PostgreSQL + SQLAlchemy" selected>PostgreSQL + SQLAlchemy ORM</option>
+              <option value="Snowflake + Snowpark">Snowflake Lakehouse + Snowpark</option>
+              <option value="Redis + Feast Feature Store">Redis Cache + Feast Feature Store</option>
+            </select>
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">Architecture Pattern:</label>
+            <select class="sf-select" id="agent-pattern" onchange="generateAiPromptSpec()">
+              <option value="Repository & Service Layer Pattern" selected>Repository & Service Layer Pattern</option>
+              <option value="Clean Architecture (Domain-Driven)">Clean Architecture (DDD)</option>
+              <option value="Event-Driven Microservice">Event-Driven (Kafka / Pulsar)</option>
+            </select>
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">Security & Governance:</label>
+            <select class="sf-select" id="agent-security" onchange="generateAiPromptSpec()">
+              <option value="OWASP Top 10 + JWT + MFA" selected>OWASP Top 10 + JWT + MFA</option>
+              <option value="mTLS + HashiCorp Vault Secrets">mTLS + Vault Secrets</option>
+              <option value="PCI-DSS + PII Tokenization">PCI-DSS + PII Tokenization</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="code-block" style="margin-top: 10px;">
+          <div class="code-header">
+            <span class="code-lang">Compiled Context-Engineered Agent Package</span>
+          </div>
+          <div class="code-content"><pre id="agent-prompt-output">Select options above and click Generate Spec & Prompt...</pre></div>
+        </div>
+      </div>
+
+      <!-- Interactive Multi-Agent Loop Stepper -->
+      <div class="bank-widget-card">
+        <div class="bank-widget-header">
+          <div class="bank-widget-title">
+            <span>🔄 Interactive Multi-Agent Code Generation Loop Stepper</span>
+          </div>
+          <button class="sf-badge" style="cursor: pointer; border: none;" onclick="runAgentLoopStep()">▶️ Step Agent Loop</button>
+        </div>
+
+        <div class="sf-metrics-grid">
+          <div class="sf-metric">
+            <div class="sf-metric-val"><span class="status-badge monitor" id="agent-step-badge">Step 1: PLAN</span></div>
+            <div class="sf-metric-lbl">Active Agent Swarm Phase</div>
+          </div>
+          <div class="sf-metric">
+            <div class="sf-metric-val" style="color: #38BDF8;">6 Steps</div>
+            <div class="sf-metric-lbl">Iterative Validation Loop</div>
+          </div>
+        </div>
+
+        <div class="code-block" style="margin-top: 16px;">
+          <div class="code-header">
+            <span class="code-lang">Agent Execution Log Output</span>
+          </div>
+          <div class="code-content"><pre id="agent-loop-log">[Step 1/6] PLAN
+>>> Planner Agent: Analyzed PRD & /docs context. Created execution graph of 4 microservices.</pre></div>
+        </div>
+      </div>
+
+      <h3>Multi-Agent Orchestration Workflow</h3>
+      <div class="mermaid">
+      graph TD
+          Planner["🧠 Planner Agent (Deconstructs tasks)"] --> Research["🔍 Research Agent (Retrieves /docs & patterns)"]
+          Planner --> Coding["💻 Coding Agent (Writes clean DTOs & Logic)"]
+          Planner --> DBAgent["💾 DB Agent (Schemas & Migrations)"]
+          Research --> Testing["🧪 Testing Agent (Generates Pytest suite)"]
+          Coding --> Security["🛡️ Security Agent (OWASP & Semgrep scan)"]
+          DBAgent --> Review["👁️ Review Agent (Code smells & SOLID checks)"]
+          Testing --> Merge["🔀 Merge Coordinator"]
+          Security --> Merge
+          Review --> Merge
+          Merge --> Final["🚀 Deployed Production Codebase"]
+      </div>
+
+      <h3>The 13 Core Pillars of Enterprise AI Agent Development</h3>
+      <ol>
+        <li><strong>Spec-Driven Development:</strong> Write detailed Markdown specifications (PRD, Feature, Actors, Acceptance Criteria, Performance SLAs) before invoking coding agents.</li>
+        <li><strong>Technical Specification Alignment:</strong> Supply precise backend framework, ORM, database, cache, auth, and CI/CD parameters to eliminate architectural drift.</li>
+        <li><strong>Context Engineering:</strong> Provide a dedicated <code>/docs</code> directory containing <code>architecture.md</code>, <code>coding_guidelines.md</code>, <code>database_schema.sql</code>, <code>api_contracts.yaml</code>, <code>security_policy.md</code>, and <code>deployment.md</code>.</li>
+        <li><strong>Prompt Engineering:</strong> Explicitly state frameworks, architectural patterns, quality goals, and error handling rules rather than generic one-liners.</li>
+        <li><strong>Loop Engineering:</strong> Automate the iterative loop: Plan ➔ Generate ➔ Compile/Lint ➔ Run Tests ➔ Analyze Errors ➔ Fix ➔ Refactor ➔ Deploy.</li>
+        <li><strong>Multi-Agent Workflows:</strong> Orchestrate specialized agents (Planner, Research, Builder, DB, Tester, Security, Reviewer) coordinated by a Merge Manager.</li>
+        <li><strong>Context Window Optimization:</strong> Modularize large codebases into Architecture ➔ Module ➔ Feature ➔ API ➔ Function layers to preserve agent token efficiency.</li>
+        <li><strong>Coding Standards Enforcement:</strong> Enforce PEP8, SOLID, DRY, KISS, Repository Pattern, DTOs, and Dependency Injection across generated artifacts.</li>
+        <li><strong>Agent Memory & Persistence:</strong> Maintain persistent documentation tracking sprint progress, open issues, ADRs, known bugs, and technical debt.</li>
+        <li><strong>Automated Validation Loop:</strong> Pipeline automation executing Unit tests ➔ Integration tests ➔ Security scan ➔ Linting ➔ Code coverage ➔ Performance benchmarks.</li>
+        <li><strong>Enterprise Workflow Integration:</strong> Jira/Linear Story ➔ Spec ➔ Arch Review ➔ AI Planning ➔ AI Coding ➔ AI Testing ➔ Security Review ➔ Pull Request ➔ Human Approval ➔ CI/CD ➔ Production.</li>
+        <li><strong>Real-World Financial Systems Integration:</strong> End-to-end UPI Transaction Validation example using multi-agent payment APIs, Kafka consumers, settlement engines, and audit loggers.</li>
+        <li><strong>Recommended Enterprise AI Coding Stack (2026):</strong>
+          <ul>
+            <li><strong>IDE & Agents:</strong> Cursor, VS Code + GitHub Copilot Agent, Claude Code, Cline, Roo Code.</li>
+            <li><strong>Context Management & RAG:</strong> Model Context Protocol (MCP) Servers, Vector DB repository indexing.</li>
+            <li><strong>Testing & Quality:</strong> Pytest, Playwright, Ruff, ESLint, SonarQube, Semgrep, CodeQL.</li>
+            <li><strong>CI/CD & Observability:</strong> GitHub Actions, Argo CD, Kubernetes, Helm, OpenTelemetry, Prometheus, Grafana.</li>
+          </ul>
+        </li>
+      </ol>
+    `
   }
 };
 
@@ -6151,6 +6302,7 @@ const NAV_STRUCTURE = [
       { id: 'ai-architecture-stack', title: 'AI Architecture Stack', icon: '📄' },
       { id: 'build-ai-gateway', title: 'Build Your Own AI Gateway', icon: '📄' },
       { id: 'mcp-tool-engineering', title: 'Model Context Protocol (MCP)', icon: '📄' },
+      { id: 'ai-coding-agent-workflow', title: 'AI Coding Agent Workflows & Context Engineering', icon: '📄' },
     ]
   },
   {
