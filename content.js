@@ -127,6 +127,12 @@ const SITE_CONTENT = {
           <div class="card-desc">&lt;50ms SLA Pipeline, XGBoost, SHAP Explainability, Interactive ROI Calculator & Python Code</div>
           <div class="card-count">Interactive · Code & ROI</div>
         </div>
+        <div class="card" onclick="navigateTo('financial-data-architectures')">
+          <span class="card-icon">📈</span>
+          <div class="card-title">Designing Financial Data Architectures</div>
+          <div class="card-desc">O'Reilly Framework, 7-Step Trade Lifecycle Simulator & Data Architecture Maturity Model</div>
+          <div class="card-count">Interactive · O'Reilly</div>
+        </div>
       </div>
 
       <div class="section-title"><span class="section-icon">🔥</span> Featured Examples</div>
@@ -5698,6 +5704,229 @@ FORCE = <span class="kw">FALSE</span>;</pre></div>
     calculate_platform_roi()</pre></div>
       </div>
     `
+  },
+
+  // ─── O'REILLY MODULE: FINANCIAL DATA ARCHITECTURES ─────────
+  'financial-data-architectures': {
+    id: 'financial-data-architectures',
+    title: 'Designing Financial Data Architectures (O\'Reilly Framework)',
+    category: 'Banking AI & MLOps Platform',
+    tags: ['financial-data', 'data-architecture', 'trade-lifecycle', 'togaf', 'data-silos', 'maturity-model'],
+    lastUpdated: '2026-07-23',
+    body: `
+      <h2>Designing Financial Data Architectures</h2>
+      <p>Based on the O'Reilly framework by Tamer Khraisha, a <strong>Financial Data Architecture</strong> is a domain-specific blueprint for collecting, storing, sharing, and integrating financial data while satisfying strict regulatory, performance, and governance requirements.</p>
+
+      <div class="mermaid">
+      graph LR
+          Prod["1. Production<br/>(Exchanges, Core Banking, Trading Platforms)"] --> Dist["2. Distribution<br/>(Bloomberg, FactSet, Databento APIs)"]
+          Dist --> Aug["3. Augmentation<br/>(MSCI Indices, Sentiment, Risk Analytics)"]
+          Aug --> Embed["4. Embedding<br/>(Trading Systems, Risk Dashboards, AI Agents)"]
+      </div>
+
+      <h3>Characteristics & Entity Resolution in Financial Markets</h3>
+      <p>Financial data is high-dimensional, hierarchical, and uses fragmented entity identifiers across systems:</p>
+      <ul>
+        <li><span class="badge-id badge-isin">ISIN</span> <strong>US0378331005:</strong> International Securities Identification Number for financial instruments.</li>
+        <li><span class="badge-id badge-lei">LEI</span> <strong>8I5DZWZKVSZI1NUHU748:</strong> Legal Entity Identifier for global financial institutions & counterparties.</li>
+        <li><span class="badge-id badge-figi">FIGI</span> <strong>BBG000B9XRY4:</strong> Financial Instrument Global Identifier across market venues.</li>
+        <li><span class="badge-id badge-cusip">CUSIP</span> <strong>037833100:</strong> North American security classification code.</li>
+      </ul>
+
+      <!-- Interactive 7-Step Trade Lifecycle Simulator -->
+      <div class="bank-widget-card">
+        <div class="bank-widget-header">
+          <div class="bank-widget-title">
+            <span>📈 Interactive 7-Step Security Trade Lifecycle Simulator</span>
+          </div>
+          <button class="sf-badge" style="cursor: pointer; border: none;" onclick="runTradeSimulation()">🚀 Run Trade Simulation</button>
+        </div>
+
+        <div class="sf-controls-grid">
+          <div class="sf-control-group">
+            <label class="sf-control-label">Ticker Symbol:</label>
+            <input type="text" class="sf-input" id="trade-ticker" value="AAPL" oninput="runTradeSimulation()" />
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">Order Side:</label>
+            <select class="sf-select" id="trade-side" onchange="runTradeSimulation()">
+              <option value="BUY" selected>BUY (Long Position)</option>
+              <option value="SELL">SELL (Liquidation)</option>
+            </select>
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">Order Quantity:</label>
+            <input type="number" class="sf-input" id="trade-qty" value="500" step="50" oninput="runTradeSimulation()" />
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">Execution Price ($):</label>
+            <input type="number" class="sf-input" id="trade-price" value="225.50" step="0.5" oninput="runTradeSimulation()" />
+          </div>
+        </div>
+
+        <!-- Stepper Results -->
+        <div class="trade-stepper-container">
+          <!-- Step 1 -->
+          <div class="trade-step-card active-step">
+            <div class="trade-step-header">
+              <div class="trade-step-num">1</div>
+              <div class="trade-step-title">Order Placement</div>
+            </div>
+            <div class="trade-field-row"><span class="trade-field-name">OrderID:</span><span class="trade-field-val" id="t-ord-id">ORD_892104</span></div>
+            <div class="trade-field-row"><span class="trade-field-name">Side / Qty:</span><span class="trade-field-val" id="t-ord-side">BUY</span></div>
+            <div class="trade-field-row"><span class="trade-field-name">Order Price:</span><span class="trade-field-val" id="t-ord-price">$225.50</span></div>
+            <div class="trade-field-row"><span class="trade-field-name">Timestamp:</span><span class="trade-field-val" id="t-ord-time">2026-07-23 21:00:00</span></div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="trade-step-card active-step">
+            <div class="trade-step-header">
+              <div class="trade-step-num">2</div>
+              <div class="trade-step-title">Order Routing</div>
+            </div>
+            <div class="trade-field-row"><span class="trade-field-name">Venue:</span><span class="trade-field-val" id="t-route-dest">NASDAQ Exchange</span></div>
+            <div class="trade-field-row"><span class="trade-field-name">Route Time:</span><span class="trade-field-val" id="t-route-time">2026-07-23 21:00:00</span></div>
+            <div class="trade-field-row"><span class="trade-field-name">Status:</span><span class="trade-field-val" id="t-route-status">ACKNOWLEDGED</span></div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="trade-step-card active-step">
+            <div class="trade-step-header">
+              <div class="trade-step-num">3</div>
+              <div class="trade-step-title">Order Matching</div>
+            </div>
+            <div class="trade-field-row"><span class="trade-field-name">MatchID:</span><span class="trade-field-val" id="t-match-id">MATCH_441209</span></div>
+            <div class="trade-field-row"><span class="trade-field-name">Matched Qty:</span><span class="trade-field-val" id="t-match-qty">500 shares</span></div>
+            <div class="trade-field-row"><span class="trade-field-name">Match Price:</span><span class="trade-field-val" id="t-match-price">$225.50</span></div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="trade-step-card active-step">
+            <div class="trade-step-header">
+              <div class="trade-step-num">4</div>
+              <div class="trade-step-title">Trade Execution</div>
+            </div>
+            <div class="trade-field-row"><span class="trade-field-name">ExecutionID:</span><span class="trade-field-val" id="t-exec-id">EXEC_771823</span></div>
+            <div class="trade-field-row"><span class="trade-field-name">Exchange Fees:</span><span class="trade-field-val" id="t-exec-fee">$16.91</span></div>
+            <div class="trade-field-row"><span class="trade-field-name">Exec Time:</span><span class="trade-field-val" id="t-exec-time">2026-07-23 21:00:01</span></div>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="trade-step-card active-step">
+            <div class="trade-step-header">
+              <div class="trade-step-num">5</div>
+              <div class="trade-step-title">Trade Confirmation</div>
+            </div>
+            <div class="trade-field-row"><span class="trade-field-name">ConfirmID:</span><span class="trade-field-val" id="t-conf-id">CONF_339102</span></div>
+            <div class="trade-field-row"><span class="trade-field-name">Total Amount:</span><span class="trade-field-val" id="t-conf-total">$112,766.91</span></div>
+            <div class="trade-field-row"><span class="trade-field-name">Settle Date:</span><span class="trade-field-val" id="t-conf-settle-date">2026-07-24</span></div>
+          </div>
+
+          <!-- Step 6 -->
+          <div class="trade-step-card active-step">
+            <div class="trade-step-header">
+              <div class="trade-step-num">6</div>
+              <div class="trade-step-title">Clearing & Settlement</div>
+            </div>
+            <div class="trade-field-row"><span class="trade-field-name">Clearinghouse:</span><span class="trade-field-val" id="t-clearing-id">DTCC / NSCC</span></div>
+            <div class="trade-field-row"><span class="trade-field-name">InstructionID:</span><span class="trade-field-val" id="t-settle-id">SETTLE_901238</span></div>
+            <div class="trade-field-row"><span class="trade-field-name">Status:</span><span class="trade-field-val" id="t-settle-status">PENDING (T+1)</span></div>
+          </div>
+
+          <!-- Step 7 -->
+          <div class="trade-step-card active-step">
+            <div class="trade-step-header">
+              <div class="trade-step-num">7</div>
+              <div class="trade-step-title">Position Update</div>
+            </div>
+            <div class="trade-field-row"><span class="trade-field-name">PositionID:</span><span class="trade-field-val" id="t-pos-id">POS_AAPL_9901</span></div>
+            <div class="trade-field-row"><span class="trade-field-name">Total Holdings:</span><span class="trade-field-val" id="t-pos-qty">1,700 shares</span></div>
+            <div class="trade-field-row"><span class="trade-field-name">Cost Basis:</span><span class="trade-field-val" id="t-pos-cost">$220.99</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Data Architecture Maturity Assessor -->
+      <div class="bank-widget-card">
+        <div class="bank-widget-header">
+          <div class="bank-widget-title">
+            <span>🏛️ Enterprise Data Architecture Maturity Assessor</span>
+          </div>
+          <span class="bank-badge">5-Level Framework</span>
+        </div>
+
+        <div class="sf-controls-grid">
+          <div class="sf-control-group">
+            <label class="sf-control-label">1. Data Integration & Silos:</label>
+            <select class="sf-select" id="mat-silos" onchange="calculateMaturity()">
+              <option value="1">Level 1: Highly fragmented silos across departments</option>
+              <option value="2">Level 2: Basic point-to-point batch feeds</option>
+              <option value="3" selected>Level 3: Centralized Data Warehouse / Lakehouse</option>
+              <option value="4">Level 4: Enterprise Data Fabric & Data Mesh</option>
+              <option value="5">Level 5: Real-time event streaming & semantic virtualization</option>
+            </select>
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">2. Reference Data & Identifiers:</label>
+            <select class="sf-select" id="mat-refdata" onchange="calculateMaturity()">
+              <option value="1">Level 1: Unmapped custom internal IDs</option>
+              <option value="2">Level 2: Manual mapping spreadsheets</option>
+              <option value="3" selected>Level 3: Cross-entity linkage (ISIN / LEI / FIGI)</option>
+              <option value="4">Level 4: Automated Golden Copy Reference Master</option>
+              <option value="5">Level 5: Graph-based lineage & entity knowledge graph</option>
+            </select>
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">3. Data Governance & Quality:</label>
+            <select class="sf-select" id="mat-gov" onchange="calculateMaturity()">
+              <option value="1">Level 1: Reactive error fixing</option>
+              <option value="2">Level 2: Basic SQL validation queries</option>
+              <option value="3" selected>Level 3: Automated data contracts (Great Expectations)</option>
+              <option value="4">Level 4: Enterprise RBAC/ABAC & audit lineage</option>
+              <option value="5">Level 5: Continuous automated quality & drift self-healing</option>
+            </select>
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">4. Straight-Through Processing (STP):</label>
+            <select class="sf-select" id="mat-stp" onchange="calculateMaturity()">
+              <option value="1">Level 1: Manual spreadsheet & email trade entry</option>
+              <option value="2">Level 2: Batch end-of-day file processing</option>
+              <option value="3" selected>Level 3: Automated intraday pipeline execution</option>
+              <option value="4">Level 4: High-throughput automated STP (<500ms)</option>
+              <option value="5">Level 5: Zero-touch sub-50ms automated execution</option>
+            </select>
+          </div>
+
+          <div class="sf-control-group">
+            <label class="sf-control-label">5. Observability & AI Readiness:</label>
+            <select class="sf-select" id="mat-obs" onchange="calculateMaturity()">
+              <option value="1">Level 1: No metrics or tracing</option>
+              <option value="2">Level 2: Basic server CPU/Memory monitoring</option>
+              <option value="3" selected>Level 3: OpenTelemetry tracing & Prometheus alerts</option>
+              <option value="4">Level 4: AI Feature Store + Model Governance</option>
+              <option value="5">Level 5: Autonomous Multi-Agent Swarm Integration</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="sf-metrics-grid">
+          <div class="sf-metric">
+            <div class="sf-metric-val"><span class="status-badge otp" id="mat-level-title">Level 3: Defined (Formalized Architecture)</span></div>
+            <div class="sf-metric-lbl">Assessed Maturity Stage</div>
+          </div>
+          <div class="sf-metric">
+            <div class="sf-metric-val" id="mat-score-val" style="color: #38BDF8;">3.0 / 5.0 Rating</div>
+            <div class="sf-metric-lbl">Overall Composite Score</div>
+          </div>
+        </div>
+      </div>
+    `
   }
 };
 
@@ -5859,6 +6088,7 @@ const NAV_STRUCTURE = [
     children: [
       { id: 'enterprise-banking-ai-platform', title: 'Enterprise Banking AI Roadmap (12 Phases)', icon: '📄' },
       { id: 'realtime-upi-fraud-platform', title: 'Real-Time UPI Fraud Engine (<50ms SLA)', icon: '📄' },
+      { id: 'financial-data-architectures', title: 'Designing Financial Data Architectures (O\'Reilly)', icon: '📄' },
     ]
   },
 ];

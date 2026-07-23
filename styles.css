@@ -1480,6 +1480,90 @@ body::before {
 .status-badge.hold { background: rgba(249, 115, 22, 0.2); color: #FB923C; border: 1px solid #F97316; }
 .status-badge.block { background: rgba(239, 68, 68, 0.2); color: #F87171; border: 1px solid #EF4444; }
 
+/* ============================================
+   7-Step Trade Lifecycle Simulator Styles
+   ============================================ */
+
+.trade-stepper-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.trade-step-card {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 16px;
+  transition: all 0.3s ease;
+}
+
+.trade-step-card.active-step {
+  border-color: #38BDF8;
+  background: rgba(56, 189, 248, 0.08);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+}
+
+.trade-step-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 8px;
+}
+
+.trade-step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(56, 189, 248, 0.2);
+  color: #38BDF8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.trade-step-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.trade-field-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  margin-bottom: 6px;
+}
+
+.trade-field-name {
+  color: var(--text-tertiary);
+}
+
+.trade-field-val {
+  font-family: var(--font-mono);
+  color: var(--accent-pink);
+  font-weight: 600;
+}
+
+.badge-id {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  margin-right: 4px;
+}
+.badge-isin { background: rgba(59, 130, 246, 0.2); color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.4); }
+.badge-lei { background: rgba(168, 85, 247, 0.2); color: #C084FC; border: 1px solid rgba(168, 85, 247, 0.4); }
+.badge-figi { background: rgba(16, 185, 129, 0.2); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.4); }
+.badge-cusip { background: rgba(245, 158, 11, 0.2); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.4); }
+
 /* --- Print Styles --- */
 @media print {
   .sidebar, .mobile-toggle, .breadcrumb-bar, .search-overlay {
@@ -1493,5 +1577,6 @@ body::before {
     color: black;
   }
 }
+
 
 

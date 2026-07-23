@@ -526,4 +526,104 @@ function calculateBankingRoi() {
   document.getElementById('roi-pct-val').innerText = `${roiPct}% ROI`;
 }
 
+// ============================================
+// 7-Step Security Trade Lifecycle Simulator & Maturity Assessor
+// ============================================
+
+function runTradeSimulation() {
+  const ticker = document.getElementById('trade-ticker')?.value || 'AAPL';
+  const side = document.getElementById('trade-side')?.value || 'BUY';
+  const qty = parseInt(document.getElementById('trade-qty')?.value || 500);
+  const price = parseFloat(document.getElementById('trade-price')?.value || 225.50);
+
+  const now = new Date();
+  const isoNow = now.toISOString().replace('T', ' ').substring(0, 19);
+
+  // Calculate fees & settlement date (T+1 Settlement standard)
+  const totalPrincipal = qty * price;
+  const exchangeFee = (totalPrincipal * 0.00015).toFixed(2);
+  const grandTotal = (totalPrincipal + parseFloat(exchangeFee)).toFixed(2);
+
+  const settlementDate = new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString().substring(0, 10);
+
+  // Generate unique IDs matching book standards
+  const orderId = `ORD_${Math.floor(100000 + Math.random() * 900000)}`;
+  const matchId = `MATCH_${Math.floor(100000 + Math.random() * 900000)}`;
+  const execId = `EXEC_${Math.floor(100000 + Math.random() * 900000)}`;
+  const confirmId = `CONF_${Math.floor(100000 + Math.random() * 900000)}`;
+  const settleId = `SETTLE_${Math.floor(100000 + Math.random() * 900000)}`;
+  const posId = `POS_${ticker}_9901`;
+
+  // Update UI Fields
+  setTradeField('t-ord-id', orderId);
+  setTradeField('t-ord-side', side);
+  setTradeField('t-ord-qty', `${qty} shares`);
+  setTradeField('t-ord-price', `$${price.toFixed(2)}`);
+  setTradeField('t-ord-time', isoNow);
+
+  setTradeField('t-route-dest', 'NASDAQ Execution Venue');
+  setTradeField('t-route-time', isoNow);
+  setTradeField('t-route-status', 'ACKNOWLEDGED (SENT)');
+
+  setTradeField('t-match-id', matchId);
+  setTradeField('t-match-qty', `${qty} shares`);
+  setTradeField('t-match-price', `$${price.toFixed(2)}`);
+
+  setTradeField('t-exec-id', execId);
+  setTradeField('t-exec-fee', `$${exchangeFee}`);
+  setTradeField('t-exec-time', isoNow);
+
+  setTradeField('t-conf-id', confirmId);
+  setTradeField('t-conf-total', `$${grandTotal}`);
+  setTradeField('t-conf-settle-date', settlementDate);
+
+  setTradeField('t-clearing-id', 'DTCC / NSCC Clearinghouse');
+  setTradeField('t-settle-id', settleId);
+  setTradeField('t-settle-status', 'PENDING_SETTLEMENT (T+1)');
+
+  setTradeField('t-pos-id', posId);
+  setTradeField('t-pos-qty', `${qty + 1200} shares (Updated)`);
+  setTradeField('t-pos-cost', `$${(price * 0.98).toFixed(2)} (Avg Basis)`);
+}
+
+function setTradeField(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.innerText = val;
+}
+
+function calculateMaturity() {
+  const s1 = parseInt(document.getElementById('mat-silos')?.value || 2);
+  const s2 = parseInt(document.getElementById('mat-refdata')?.value || 2);
+  const s3 = parseInt(document.getElementById('mat-gov')?.value || 3);
+  const s4 = parseInt(document.getElementById('mat-stp')?.value || 2);
+  const s5 = parseInt(document.getElementById('mat-obs')?.value || 3);
+
+  const avgScore = (s1 + s2 + s3 + s4 + s5) / 5;
+  const level = Math.round(avgScore);
+
+  const titles = [
+    '',
+    'Level 1: Initial / Ad-Hoc (Fragmented Silos)',
+    'Level 2: Repeatable (Emerging Standards)',
+    'Level 3: Defined (Formalized Architecture & Metadata)',
+    'Level 4: Managed (Enterprise Governance & STP)',
+    'Level 5: Optimized (Real-Time AI & Continuous Tuning)'
+  ];
+
+  const badgeClasses = ['', 'block', 'hold', 'otp', 'monitor', 'approve'];
+
+  const levelTitle = titles[level] || titles[1];
+  const badgeClass = badgeClasses[level] || badgeClasses[1];
+
+  const outputTitleEl = document.getElementById('mat-level-title');
+  if (outputTitleEl) {
+    outputTitleEl.className = `status-badge ${badgeClass}`;
+    outputTitleEl.innerText = levelTitle;
+  }
+
+  const scoreEl = document.getElementById('mat-score-val');
+  if (scoreEl) scoreEl.innerText = `${avgScore.toFixed(1)} / 5.0 Rating`;
+}
+
+
 
